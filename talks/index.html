@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>分享目录 | CACO PRO</title>
+  <meta name="description" content="乔卓越的分享目录与公开实验。" />
+  <style>
+    :root {
+      --bg: #10231f;
+      --panel: rgba(248, 242, 233, 0.96);
+      --line: rgba(22, 39, 35, 0.12);
+      --text: #162723;
+      --text-soft: rgba(22, 39, 35, 0.72);
+      --accent: #d96d35;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(217, 109, 53, 0.2), transparent 30%),
+        linear-gradient(180deg, #15302b 0%, #0d1d1a 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .shell {
+      width: min(calc(100% - 32px), 1120px);
+      margin: 24px auto;
+      background: linear-gradient(180deg, rgba(250, 246, 239, 0.97), rgba(246, 240, 232, 0.95));
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 36px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 28px 12px;
+    }
+    .topbar a {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 15px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      font-size: 14px;
+    }
+    .content {
+      padding: 0 28px 28px;
+    }
+    .eyebrow {
+      margin-top: 6px;
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 10px 0 10px;
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+    .intro {
+      margin: 0 0 24px;
+      max-width: 44em;
+      color: var(--text-soft);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+    .card {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 20px;
+      padding: 18px;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      justify-content: space-between;
+    }
+    .meta h2 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.05;
+    }
+    .meta p {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+    .link {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: #132822;
+      color: #fff;
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .card { grid-template-columns: 1fr; }
+      .content, .topbar { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a href="/">返回主页</a>
+      <a href="https://ai.cacopro.vip/" target="_blank" rel="noreferrer">AI 应用</a>
+    </div>
+    <div class="content">
+      <div class="eyebrow">Talk Archive</div>
+      <h1>分享与公开实验</h1>
+      <p class="intro">这里会逐步收敛我的公开分享、实践复盘和专题表达。先从这次 OpenClaw 分享开始，后面再继续扩展成完整目录。</p>
+      <a class="card" href="/talks/openclaw-first-experiment/">
+        <img src="/talks/openclaw-first-experiment/assets/graphics/intro-cover.jpg" alt="OpenClaw 分享封面" />
+        <div class="meta">
+          <div>
+            <div class="eyebrow">March 2026</div>
+            <h2>AI不只是写代码</h2>
+            <p>OpenClaw 在创作工作流里的第一次公开实验。围绕买票、旅行规划、浏览器自动化、视频剪辑、公众号创作与 OpenClaw 工程化实践展开。</p>
+          </div>
+          <span class="link">进入分享页</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

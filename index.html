@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>乔卓越 | CACO PRO</title>
+  <meta name="description" content="乔卓越的个人主页：企业 AI 应用、后端架构、AI Agent 工程落地与公开分享。" />
+  <style>
+    :root {
+      --bg: #10231f;
+      --panel: rgba(248, 242, 233, 0.94);
+      --panel-soft: rgba(255, 250, 244, 0.76);
+      --text: #162723;
+      --text-soft: rgba(22, 39, 35, 0.72);
+      --line: rgba(22, 39, 35, 0.12);
+      --accent: #d96d35;
+      --accent-soft: rgba(217, 109, 53, 0.12);
+      --green-soft: rgba(22, 39, 35, 0.08);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+      --radius: 28px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(217, 109, 53, 0.22), transparent 28%),
+        radial-gradient(circle at top right, rgba(243, 199, 84, 0.1), transparent 24%),
+        linear-gradient(180deg, #15302b 0%, #0d1d1a 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 24px auto;
+      background:
+        radial-gradient(circle at top left, rgba(217, 109, 53, 0.11), transparent 32%),
+        linear-gradient(180deg, rgba(250, 246, 239, 0.97), rgba(246, 240, 232, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 36px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 28px 14px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .brand strong {
+      font-size: 14px;
+      letter-spacing: 0.18em;
+    }
+
+    .brand span {
+      font-size: 12px;
+      color: var(--text-soft);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a,
+    .button-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .button-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(22, 39, 35, 0.28);
+      background: #fff;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 18px;
+      padding: 8px 28px 22px;
+    }
+
+    .hero-copy,
+    .hero-visual,
+    .section-card,
+    .link-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      min-height: 0;
+    }
+
+    .hero-copy {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: rgba(22, 39, 35, 0.26);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      margin-top: 12px;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .hero-copy p {
+      max-width: 40em;
+      color: var(--text-soft);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button-link.primary {
+      background: #132822;
+      color: #fff;
+      border-color: #132822;
+    }
+
+    .hero-visual {
+      overflow: hidden;
+      position: relative;
+      min-height: 460px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        #efe7dc;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.95) contrast(1.03);
+    }
+
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 34%;
+      background: linear-gradient(180deg, rgba(16,35,31,0), rgba(16,35,31,0.46));
+    }
+
+    .hero-tag {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      z-index: 1;
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hero-tag span,
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.45);
+    }
+
+    .section {
+      padding: 0 28px 22px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .two-col {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .three-col {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .section-card {
+      padding: 22px;
+    }
+
+    .section-card h2 {
+      font-size: 26px;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      line-height: 1.12;
+    }
+
+    .section-card .intro {
+      color: var(--text-soft);
+      line-height: 1.72;
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      background: var(--green-soft);
+      border-color: transparent;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .timeline-item:first-child { border-top: 0; padding-top: 0; }
+
+    .timeline-year {
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .timeline-copy strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-copy span {
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .link-card {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 260px;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .link-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 50px rgba(16, 35, 31, 0.1);
+    }
+
+    .link-kicker {
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .link-card h3 {
+      font-size: 24px;
+      line-height: 1.12;
+    }
+
+    .link-card p {
+      color: var(--text-soft);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .link-meta {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .footer {
+      padding: 6px 28px 28px;
+      color: rgba(22, 39, 35, 0.62);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .two-col,
+      .three-col {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 360px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(calc(100% - 18px), var(--max));
+        border-radius: 24px;
+      }
+
+      .nav,
+      .hero,
+      .section,
+      .footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .hero-copy,
+      .section-card,
+      .link-card {
+        padding: 18px;
+      }
+
+      .timeline-item {
+        grid-template-columns: 56px 1fr;
+        gap: 12px;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="nav">
+      <div class="brand">
+        <strong>CACO PRO</strong>
+        <span>Qiao Zhuoyue</span>
+      </div>
+      <nav class="nav-links">
+        <a href="/talks/">分享</a>
+        <a href="https://ai.cacopro.vip/" target="_blank" rel="noreferrer">AI 应用</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <article class="hero-copy">
+        <div>
+          <div class="eyebrow">乔卓越 · 工程师 × 创作者</div>
+          <h1>把企业级工程能力，带进 AI 应用与创作现场。</h1>
+        </div>
+        <p>我长期做企业级后端架构、云原生平台与 AI 工程化落地，也持续把这些方法带进真实创作流程里。现在在研究 <strong>Zmagine</strong>，希望把模型、数据、记忆和流程真正连接起来，让 AI 能持续理解用户并完成复杂任务。</p>
+        <div class="hero-actions">
+          <a class="button-link primary" href="/talks/openclaw-first-experiment/">查看本次分享</a>
+          <a class="button-link" href="/talks/">查看全部分享</a>
+          <a class="button-link" href="https://ai.cacopro.vip/" target="_blank" rel="noreferrer">打开 AI 应用</a>
+        </div>
+      </article>
+      <aside class="hero-visual">
+        <img src="/assets/site/profile.jpg" alt="乔卓越" />
+        <div class="hero-tag">
+          <span>企业 AI 应用</span>
+          <span>后端架构</span>
+          <span>AI Agent 工程落地</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="grid two-col">
+        <article class="section-card">
+          <div class="eyebrow">方向</div>
+          <h2>我现在聚焦的事情</h2>
+          <p class="intro">企业级后端架构设计、AI Agent 应用落地、研发提效、复杂工作流编排，以及把这些能力变成长期可用的产品与系统。</p>
+          <div class="chip-row">
+            <span class="pill">AI Agent 工程化</span>
+            <span class="pill">后端架构</span>
+            <span class="pill">企业交付</span>
+            <span class="pill">研发效能</span>
+            <span class="pill">内容与影像表达</span>
+          </div>
+        </article>
+        <article class="section-card">
+          <div class="eyebrow">时间线</div>
+          <h2>关键经历</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">2026</div>
+              <div class="timeline-copy"><strong>Zmagine</strong><span>研究企业 AI 应用的大脑平台。</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2024</div>
+              <div class="timeline-copy"><strong>字节跳动 · 后端技术负责人</strong><span>AI 工程化实践获得 Top 1% 级结果验证。</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2022</div>
+              <div class="timeline-copy"><strong>腾讯游戏 · 云原生架构师</strong><span>主导上云自动化交付体系建设与落地。</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2020-2021</div>
+              <div class="timeline-copy"><strong>网易游戏 / InfoQ / 极客时间</strong><span>持续做后端、云原生与技术内容输出。</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid three-col">
+        <a class="link-card" href="/talks/openclaw-first-experiment/">
+          <div class="link-kicker">Talk</div>
+          <h3>OpenClaw 在创作工作流里的第一次公开实验</h3>
+          <p>从买票、旅行、浏览器自动化、视频剪辑到公众号创作，再到为什么我还要折腾 OpenClaw。</p>
+          <div class="link-meta">查看分享页 →</div>
+        </a>
+        <a class="link-card" href="/talks/">
+          <div class="link-kicker">Archive</div>
+          <h3>分享与作品目录</h3>
+          <p>后续会把公开分享、实践复盘和专题输出，逐步沉淀成统一目录，而不是继续散落在各个平台。</p>
+          <div class="link-meta">进入目录 →</div>
+        </a>
+        <a class="link-card" href="https://ai.cacopro.vip/" target="_blank" rel="noreferrer">
+          <div class="link-kicker">Product</div>
+          <h3>AI 问答应用</h3>
+          <p>现有独立 AI 应用继续保留在二级域名，和内容站分开管理，后面更方便演进。</p>
+          <div class="link-meta">打开应用 →</div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      这是一个会持续生长的个人站壳子。后续会逐步补上更完整的个人介绍、作品集、视频项目与商务合作入口。
+    </footer>
+  </div>
+</body>
+</html>
