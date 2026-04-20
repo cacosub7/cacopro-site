@@ -129,13 +129,26 @@
         z-index: 1001;
         margin: 74px 20px 12px;
         padding: 14px 16px;
-        border-radius: 18px;
+        border-radius: 20px;
         border: 1px solid rgba(22, 24, 28, 0.1);
-        background: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 12px 28px rgba(17, 21, 26, 0.08);
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 247, 244, 0.92)),
+          rgba(255, 255, 255, 0.9);
+        box-shadow:
+          0 12px 28px rgba(17, 21, 26, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.72);
         color: var(--ink);
         line-height: 1.55;
         font-size: 13px;
+        overflow: hidden;
+      }
+
+      .mobile-guide::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 4px;
+        background: linear-gradient(180deg, var(--accent), var(--accent-blue));
       }
 
       .mobile-guide strong {
@@ -1871,6 +1884,44 @@
           top: 18px;
           right: 16px;
         }
+
+        #slide-13 .yaml-layout {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        #slide-13 .yaml-stage {
+          padding: 10px;
+          gap: 10px;
+        }
+
+        #slide-13 .yaml-row.top,
+        #slide-13 .yaml-row.bottom {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        #slide-13 .yaml-block,
+        #slide-13 .yaml-note {
+          border-radius: 16px;
+        }
+
+        #slide-13 .yaml-code {
+          font-size: 12.2px;
+          line-height: 1.3;
+        }
+
+        #slide-13 .yaml-indent-1 { padding-left: 12px; }
+        #slide-13 .yaml-indent-2 { padding-left: 24px; }
+        #slide-13 .yaml-indent-3 { padding-left: 36px; }
+
+        #slide-13 .yaml-note strong {
+          font-size: 16px;
+        }
+
+        #slide-13 .yaml-note p {
+          font-size: 13px;
+        }
       }
 
       @media (max-height: 700px) {
@@ -1900,7 +1951,7 @@
     <nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
     <div class="mobile-guide" role="note">
       <strong>移动端浏览提示</strong>
-      手机端已切到长页连续浏览模式。直接上下滑动查看；复杂图表建议横屏或双指缩放。若个别页文字仍偏小，优先用桌面端或平板打开。
+      手机端已切到长页连续浏览模式。直接上下滑动即可；代码页和复杂图表页建议横屏或双指缩放。若局部仍显拥挤，优先用电脑端或平板打开。
     </div>
 
     <section class="slide dark-slide event-brand-slide" id="slide-01">

@@ -24,10 +24,11 @@ function loadPlaywright() {
 const { chromium } = loadPlaywright();
 const args = process.argv.slice(2);
 const mobileMode = args.includes("--mobile");
+const videoLazyMode = args.includes("--video-lazy");
 const url = args.find((value) => !value.startsWith("--"));
 
 if (!url) {
-  console.error("Usage: node scripts/verify-talk.mjs [--mobile] <url>");
+  console.error("Usage: node scripts/verify-talk.mjs [--mobile] [--video-lazy] <url>");
   process.exit(1);
 }
 
@@ -95,6 +96,66 @@ try {
         {
           ok: true,
           checked: ["mobile usage note", "mobile continuous scroll mode", "mobile slide overflow"],
+        },
+        null,
+        2
+      )
+    );
+    process.exit(0);
+  }
+
+  if (videoLazyMode) {
+    const lazyState = await page.evaluate(() => {
+      const inlineVideos = Array.from(document.querySelectorAll(".media-frame video")).filter(
+        (video) => !video.classList.contains("media-modal-video")
+      );
+      return {
+        inlineCount: inlineVideos.length,
+        eagerSources: inlineVideos
+          .map((video, index) => ({
+            index,
+            currentSrc: video.currentSrc,
+            src: video.getAttribute("src"),
+            sourceSrc: video.querySelector("source")?.getAttribute("src") || "",
+          }))
+          .filter((item) => item.currentSrc || item.src || item.sourceSrc),
+      };
+    });
+
+    assert.ok(lazyState.inlineCount >= 5, `Expected multiple inline videos, got ${lazyState.inlineCount}`);
+    assert.equal(
+      lazyState.eagerSources.length,
+      0,
+      `Expected inline videos to avoid eager sources, got ${JSON.stringify(lazyState.eagerSources)}`
+    );
+
+    await page.evaluate(() => {
+      document.querySelector(".media-frame")?.dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+        })
+      );
+    });
+    await page.waitForTimeout(1200);
+
+    const modalState = await page.evaluate(() => {
+      const modal = document.querySelector(".media-modal");
+      const video = modal?.querySelector(".media-modal-video");
+      return {
+        modalHidden: modal?.hasAttribute("hidden"),
+        modalSrc: video?.getAttribute("src") || "",
+      };
+    });
+
+    assert.equal(modalState.modalHidden, false, "Expected media modal to open after clicking a video");
+    assert.ok(modalState.modalSrc, "Expected modal video src to be populated on demand");
+
+    console.log(
+      JSON.stringify(
+        {
+          ok: true,
+          checked: ["inline videos stay lazy on load", "video modal hydrates on click"],
         },
         null,
         2

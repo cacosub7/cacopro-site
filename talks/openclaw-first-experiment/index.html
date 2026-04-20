@@ -245,13 +245,26 @@ body {
   z-index: 1001;
   margin: 74px 16px 12px;
   padding: 14px 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(43, 61, 56, 0.16);
-  background: rgba(252, 250, 246, 0.94);
-  box-shadow: 0 12px 28px rgba(9, 17, 15, 0.08);
+  border-radius: 20px;
+  border: 1px solid rgba(43, 61, 56, 0.14);
+  background:
+    linear-gradient(135deg, rgba(252, 250, 246, 0.97), rgba(243, 236, 224, 0.94)),
+    rgba(252, 250, 246, 0.94);
+  box-shadow:
+    0 14px 30px rgba(9, 17, 15, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68);
   color: var(--text-primary);
   line-height: 1.55;
   font-size: 0.82rem;
+  overflow: hidden;
+}
+
+.mobile-guide::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--accent), #f3b97f);
 }
 
 .mobile-guide strong {
@@ -2170,7 +2183,7 @@ body.modal-open {
   <div class="keyboard-hint">方向键 / Space / 鼠标滚轮切页</div>
   <div class="mobile-guide" role="note">
     <strong>移动端浏览提示</strong>
-    手机端已切到长页连续浏览模式。直接上下滑动查看，视频和图片可以点开；复杂图文建议横屏或缩放查看，个别页若仍显拥挤，优先在桌面端打开。
+    手机端已切到长页连续浏览模式。直接上下滑动即可；视频现在改成点开再加载，不会首屏预读全部素材。复杂图文建议横屏或双指缩放，若局部仍显拥挤，优先在电脑端打开。
   </div>
   
     <section class="slide" id="slide-01" data-title="封面" data-slide-number="01">
@@ -2615,8 +2628,8 @@ body.modal-open {
           
     <article class="media-card reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/posters/buy-ticket-manus-20s.png" data-autoplay>
-          <source src="assets/videos/buy-ticket-manus-20s.mp4" type="video/mp4" />
+        <video muted loop playsinline preload="none" poster="assets/posters/buy-ticket-manus-20s.png" data-autoplay>
+          <source data-src="assets/videos/buy-ticket-manus-20s.mp4" type="video/mp4" />
         </video>
         <div class="media-tag">全流程快放 · 7m36s -&gt; 20s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -2632,8 +2645,8 @@ body.modal-open {
           
     <article class="media-card reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/posters/form-filling-chatgpt-20s.png" data-autoplay>
-          <source src="assets/videos/form-filling-chatgpt-20s.mp4" type="video/mp4" />
+        <video muted loop playsinline preload="none" poster="assets/posters/form-filling-chatgpt-20s.png" data-autoplay>
+          <source data-src="assets/videos/form-filling-chatgpt-20s.mp4" type="video/mp4" />
         </video>
         <div class="media-tag">全流程快放 · 13m21s -&gt; 20s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -2670,8 +2683,8 @@ body.modal-open {
           
     <article class="media-card reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/posters/travel-claude-20s.png" data-autoplay>
-          <source src="assets/videos/travel-claude-20s.mp4" type="video/mp4" />
+        <video muted loop playsinline preload="none" poster="assets/posters/travel-claude-20s.png" data-autoplay>
+          <source data-src="assets/videos/travel-claude-20s.mp4" type="video/mp4" />
         </video>
         <div class="media-tag">全流程快放 · 5m00s -&gt; 20s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -2687,8 +2700,8 @@ body.modal-open {
           
     <article class="media-card reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/posters/browser-comma-20s.png" data-autoplay>
-          <source src="assets/videos/browser-comma-20s.mp4" type="video/mp4" />
+        <video muted loop playsinline preload="none" poster="assets/posters/browser-comma-20s.png" data-autoplay>
+          <source data-src="assets/videos/browser-comma-20s.mp4" type="video/mp4" />
         </video>
         <div class="media-tag">全流程快放 · 33m11s -&gt; 20s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -2725,8 +2738,8 @@ body.modal-open {
           
     <article class="media-card reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/posters/chatcut-workflow-20s.png" data-autoplay>
-          <source src="assets/videos/chatcut-workflow-20s.mp4" type="video/mp4" />
+        <video muted loop playsinline preload="none" poster="assets/posters/chatcut-workflow-20s.png" data-autoplay>
+          <source data-src="assets/videos/chatcut-workflow-20s.mp4" type="video/mp4" />
         </video>
         <div class="media-tag">全流程快放 · 22m00s -&gt; 20s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -2742,8 +2755,8 @@ body.modal-open {
           
     <article class="media-card reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/posters/xiaohongshu-short-20s.png" data-autoplay>
-          <source src="assets/videos/xiaohongshu-short-20s.mp4" type="video/mp4" />
+        <video muted loop playsinline preload="none" poster="assets/posters/xiaohongshu-short-20s.png" data-autoplay>
+          <source data-src="assets/videos/xiaohongshu-short-20s.mp4" type="video/mp4" />
         </video>
         <div class="media-tag">全流程快放 · 24s -&gt; 20s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -2780,8 +2793,8 @@ body.modal-open {
           
     <article class="media-card reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/posters/materials-step-20s.png" data-autoplay>
-          <source src="assets/videos/materials-step-20s.mp4" type="video/mp4" />
+        <video muted loop playsinline preload="none" poster="assets/posters/materials-step-20s.png" data-autoplay>
+          <source data-src="assets/videos/materials-step-20s.mp4" type="video/mp4" />
         </video>
         <div class="media-tag">全流程快放 · 1h33m -&gt; 20s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -2797,8 +2810,8 @@ body.modal-open {
           
     <article class="media-card reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/posters/writing-youmind-20s.png" data-autoplay>
-          <source src="assets/videos/writing-youmind-20s.mp4" type="video/mp4" />
+        <video muted loop playsinline preload="none" poster="assets/posters/writing-youmind-20s.png" data-autoplay>
+          <source data-src="assets/videos/writing-youmind-20s.mp4" type="video/mp4" />
         </video>
         <div class="media-tag">全流程快放 · 8m17s -&gt; 20s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -3087,7 +3100,7 @@ body.modal-open {
     
     <article class="media-card compact reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/flow/flow-step-02.png"><source src="assets/flow/flow-step-02.mp4" type="video/mp4" /></video>
+        <video muted loop playsinline preload="none" poster="assets/flow/flow-step-02.png"><source data-src="assets/flow/flow-step-02.mp4" type="video/mp4" /></video>
         <div class="media-tag">环节 2 · 48s · 8s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
       </div>
@@ -3099,7 +3112,7 @@ body.modal-open {
     
     <article class="media-card compact reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/flow/flow-step-03.png"><source src="assets/flow/flow-step-03.mp4" type="video/mp4" /></video>
+        <video muted loop playsinline preload="none" poster="assets/flow/flow-step-03.png"><source data-src="assets/flow/flow-step-03.mp4" type="video/mp4" /></video>
         <div class="media-tag">环节 3 · 1h05m · 7s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
       </div>
@@ -3111,7 +3124,7 @@ body.modal-open {
     
     <article class="media-card compact reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/flow/flow-step-04.png"><source src="assets/flow/flow-step-04.mp4" type="video/mp4" /></video>
+        <video muted loop playsinline preload="none" poster="assets/flow/flow-step-04.png"><source data-src="assets/flow/flow-step-04.mp4" type="video/mp4" /></video>
         <div class="media-tag">环节 4 · 1m18s · 7s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
       </div>
@@ -3123,7 +3136,7 @@ body.modal-open {
     
     <article class="media-card compact reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/graphics/publish-proof-8830.jpg"><source src="assets/flow/flow-step-05.mp4" type="video/mp4" /></video>
+        <video muted loop playsinline preload="none" poster="assets/graphics/publish-proof-8830.jpg"><source data-src="assets/flow/flow-step-05.mp4" type="video/mp4" /></video>
         <div class="media-tag">环节 5 · 2h26m · 8s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
       </div>
@@ -3135,7 +3148,7 @@ body.modal-open {
     
     <article class="media-card compact reveal">
       <div class="media-frame">
-        <video muted loop playsinline preload="metadata" poster="assets/graphics/publish-proof-8870.jpg"><source src="assets/flow/flow-step-06.mp4" type="video/mp4" /></video>
+        <video muted loop playsinline preload="none" poster="assets/graphics/publish-proof-8870.jpg"><source data-src="assets/flow/flow-step-06.mp4" type="video/mp4" /></video>
         <div class="media-tag">环节 6 · 2h27m · 6s</div>
         <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
       </div>
@@ -3529,8 +3542,8 @@ body.modal-open {
           <article class="media-card reveal">
             <div class="dashboard-author"><strong>@超级峰</strong><span>Dashboard 作者</span></div>
             <div class="media-frame">
-              <video muted loop playsinline preload="metadata" poster="assets/posters/openclaw-dashboard-20s.png" data-autoplay>
-                <source src="assets/videos/openclaw-dashboard-20s.mp4" type="video/mp4" />
+              <video muted loop playsinline preload="none" poster="assets/posters/openclaw-dashboard-20s.png" data-autoplay>
+                <source data-src="assets/videos/openclaw-dashboard-20s.mp4" type="video/mp4" />
               </video>
               <div class="media-tag">全流程快放 · 35s -> 20s</div>
               <button class="media-launch" type="button" aria-label="放大播放"><span>放大播放</span></button>
@@ -3829,8 +3842,37 @@ class SlidePresentation {
     document.querySelectorAll('video[data-autoplay]').forEach((video) => video.pause());
   }
 
+  getVideoSource(video) {
+    const sourceTag = video?.querySelector('source');
+    return (
+      sourceTag?.getAttribute('src') ||
+      sourceTag?.dataset.src ||
+      video?.getAttribute('src') ||
+      video?.dataset.src ||
+      video?.currentSrc ||
+      ''
+    );
+  }
+
+  ensureVideoSource(video) {
+    if (!video) return '';
+    const sourceTag = video.querySelector('source');
+    const source = this.getVideoSource(video);
+    if (!source) return '';
+    const hasInlineSource = sourceTag?.getAttribute('src') || video.getAttribute('src');
+    if (!hasInlineSource) {
+      if (sourceTag) {
+        sourceTag.setAttribute('src', source);
+      } else {
+        video.setAttribute('src', source);
+      }
+      video.load();
+    }
+    return sourceTag?.src || video.currentSrc || video.getAttribute('src') || source;
+  }
+
   openVideoModal(sourceVideo) {
-    const source = sourceVideo.querySelector('source')?.src || sourceVideo.currentSrc;
+    const source = this.ensureVideoSource(sourceVideo);
     const poster = sourceVideo.getAttribute('poster') || '';
     const title = sourceVideo.closest('.media-card, .proof-card, .shot-card')?.querySelector('h3')?.textContent?.trim() || '媒体录屏';
     if (!source) return;
@@ -3901,6 +3943,7 @@ class SlidePresentation {
     this.slides.forEach((slide) => {
       slide.querySelectorAll('video[data-autoplay]').forEach((video) => {
         if (slide === active) {
+          this.ensureVideoSource(video);
           video.currentTime = 0;
           video.play().catch(() => {});
         } else {
