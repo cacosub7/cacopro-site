@@ -123,6 +123,30 @@
         background: rgba(255, 255, 255, 0.96);
       }
 
+      .mobile-guide {
+        display: none;
+        position: relative;
+        z-index: 1001;
+        margin: 74px 20px 12px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(22, 24, 28, 0.1);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 12px 28px rgba(17, 21, 26, 0.08);
+        color: var(--ink);
+        line-height: 1.55;
+        font-size: 13px;
+      }
+
+      .mobile-guide strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(22, 24, 28, 0.7);
+      }
+
       .slide-content {
         flex: 1;
         display: flex;
@@ -1809,6 +1833,46 @@
         }
       }
 
+      @media (max-width: 860px) {
+        html {
+          scroll-snap-type: none;
+        }
+
+        body {
+          padding-bottom: 28px;
+        }
+
+        .progress {
+          display: none;
+        }
+
+        .mobile-guide {
+          display: block;
+          margin: 72px 16px 12px;
+        }
+
+        .slide {
+          width: auto;
+          min-height: 100svh;
+          height: auto;
+          overflow: visible;
+          scroll-snap-align: none;
+          scroll-snap-stop: normal;
+        }
+
+        .slide-content {
+          justify-content: flex-start;
+          max-height: none;
+          overflow: visible;
+          padding: 44px 16px 22px;
+        }
+
+        .slide-index {
+          top: 18px;
+          right: 16px;
+        }
+      }
+
       @media (max-height: 700px) {
         :root {
           --display: clamp(34px, 5.2vw, 60px);
@@ -1834,6 +1898,10 @@
     <a class="site-backlink" href="/talks/">返回分享目录</a>
     <div class="progress"><span id="progressBar"></span></div>
     <nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+    <div class="mobile-guide" role="note">
+      <strong>移动端浏览提示</strong>
+      手机端已切到长页连续浏览模式。直接上下滑动查看；复杂图表建议横屏或双指缩放。若个别页文字仍偏小，优先用桌面端或平板打开。
+    </div>
 
     <section class="slide dark-slide event-brand-slide" id="slide-01">
       <div class="slide-index">01 / 25</div>
@@ -2849,6 +2917,7 @@
           this.currentSlide = 0;
           this.locked = false;
           this.startY = 0;
+          this.isCompactViewport = window.matchMedia("(max-width: 860px)").matches;
           this.prefersReducedMotion = window.matchMedia(
             "(prefers-reduced-motion: reduce)"
           ).matches;
@@ -2963,6 +3032,7 @@
           window.addEventListener(
             "wheel",
             (event) => {
+              if (this.isCompactViewport) return;
               if (this.locked || Math.abs(event.deltaY) < 28) return;
               event.preventDefault();
               this.locked = true;
@@ -2983,6 +3053,7 @@
           window.addEventListener(
             "touchstart",
             (event) => {
+              if (this.isCompactViewport) return;
               this.startY = event.changedTouches[0].clientY;
             },
             { passive: true }
@@ -2990,6 +3061,7 @@
           window.addEventListener(
             "touchend",
             (event) => {
+              if (this.isCompactViewport) return;
               const delta = this.startY - event.changedTouches[0].clientY;
               if (Math.abs(delta) < 60) return;
               this.goTo(

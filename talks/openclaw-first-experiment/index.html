@@ -116,6 +116,51 @@ img, .image-container {
   }
 }
 
+@media (max-width: 860px) {
+  html {
+    scroll-snap-type: none;
+  }
+
+  body {
+    padding-bottom: 28px;
+  }
+
+  .progress-bar, .nav-dots, .keyboard-hint {
+    display: none;
+  }
+
+  .site-backlink {
+    top: 16px;
+    left: 16px;
+    padding: 9px 12px;
+    font-size: 0.68rem;
+  }
+
+  .mobile-guide {
+    display: block;
+  }
+
+  .slide {
+    width: auto;
+    min-height: 100svh;
+    height: auto;
+    overflow: visible;
+    scroll-snap-align: none;
+  }
+
+  .slide-content {
+    justify-content: flex-start;
+    max-height: none;
+    overflow: visible;
+    padding-top: clamp(1rem, 4vw, 1.4rem);
+  }
+
+  .stage,
+  .page {
+    min-height: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -172,6 +217,50 @@ html, body {
 
 body {
   background: var(--bg-noise);
+}
+
+.site-backlink {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(20, 33, 31, 0.72);
+  color: rgba(255,255,255,0.92);
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.mobile-guide {
+  display: none;
+  position: relative;
+  z-index: 1001;
+  margin: 74px 16px 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(43, 61, 56, 0.16);
+  background: rgba(252, 250, 246, 0.94);
+  box-shadow: 0 12px 28px rgba(9, 17, 15, 0.08);
+  color: var(--text-primary);
+  line-height: 1.55;
+  font-size: 0.82rem;
+}
+
+.mobile-guide strong {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(31, 42, 40, 0.72);
 }
 
 .progress-bar {
@@ -2072,12 +2161,17 @@ body.modal-open {
   }
 }
 
-  </style>
+</style>
 </head>
 <body>
+  <a class="site-backlink" href="/talks/">返回分享目录</a>
   <div class="progress-bar" aria-hidden="true"></div>
   <nav class="nav-dots" aria-label="幻灯导航"></nav>
   <div class="keyboard-hint">方向键 / Space / 鼠标滚轮切页</div>
+  <div class="mobile-guide" role="note">
+    <strong>移动端浏览提示</strong>
+    手机端已切到长页连续浏览模式。直接上下滑动查看，视频和图片可以点开；复杂图文建议横屏或缩放查看，个别页若仍显拥挤，优先在桌面端打开。
+  </div>
   
     <section class="slide" id="slide-01" data-title="封面" data-slide-number="01">
       <div class="slide-content">
@@ -3558,6 +3652,7 @@ class SlidePresentation {
     this.currentSlide = 0;
     this.locked = false;
     this.startY = 0;
+    this.isCompactViewport = window.matchMedia('(max-width: 860px)').matches;
     this.nav = document.querySelector('.nav-dots');
     this.progressBar = document.querySelector('.progress-bar');
     this.modal = document.querySelector('.media-modal');
@@ -3663,6 +3758,7 @@ class SlidePresentation {
 
   bindWheel() {
     window.addEventListener('wheel', (event) => {
+      if (this.isCompactViewport) return;
       if (this.locked || this.isModalOpen() || Math.abs(event.deltaY) < 25) return;
       this.locked = true;
       const next = event.deltaY > 0
@@ -3675,10 +3771,11 @@ class SlidePresentation {
 
   bindTouch() {
     window.addEventListener('touchstart', (event) => {
+      if (this.isCompactViewport) return;
       this.startY = event.changedTouches[0].clientY;
     }, { passive: true });
     window.addEventListener('touchend', (event) => {
-      if (this.isModalOpen()) return;
+      if (this.isCompactViewport || this.isModalOpen()) return;
       const delta = this.startY - event.changedTouches[0].clientY;
       if (Math.abs(delta) < 60) return;
       this.goTo(delta > 0
