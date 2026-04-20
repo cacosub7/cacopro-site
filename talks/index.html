@@ -9,10 +9,12 @@
     :root {
       --bg: #10231f;
       --panel: rgba(248, 242, 233, 0.96);
+      --panel-soft: rgba(255, 251, 245, 0.78);
       --line: rgba(22, 39, 35, 0.12);
       --text: #162723;
       --text-soft: rgba(22, 39, 35, 0.72);
       --accent: #d96d35;
+      --accent-soft: rgba(217, 109, 53, 0.12);
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
     }
     * { box-sizing: border-box; }
@@ -56,7 +58,8 @@
     }
     .cards {
       display: grid;
-      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
     }
     .eyebrow {
       margin-top: 6px;
@@ -79,51 +82,149 @@
       font-size: 16px;
     }
     .card {
-      display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
-      gap: 20px;
-      padding: 18px;
-      border-radius: 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 30px;
       border: 1px solid var(--line);
-      background: var(--panel);
+      background:
+        radial-gradient(circle at top left, rgba(217, 109, 53, 0.08), transparent 26%),
+        linear-gradient(180deg, rgba(252, 248, 242, 0.98), rgba(243, 236, 226, 0.96));
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
     }
-    .card img {
+    .card::after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 22px;
+      bottom: 22px;
+      width: 7px;
+      background:
+        radial-gradient(circle, rgba(214, 158, 110, 0.7) 0 40%, transparent 46%) center top / 7px 18px repeat-y;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .card-media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      aspect-ratio: 1 / 0.9;
+      background: rgba(31, 42, 40, 0.08);
+      border: 1px solid rgba(22, 39, 35, 0.08);
+    }
+    .card-media img {
       width: 100%;
       height: 100%;
-      min-height: 280px;
       object-fit: cover;
-      border-radius: 20px;
       display: block;
+      filter: saturate(0.92) contrast(1.03);
+    }
+    .card-media::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 26%;
+      background: linear-gradient(180deg, rgba(16, 35, 31, 0), rgba(16, 35, 31, 0.12));
+      pointer-events: none;
+    }
+    .card-badge {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 251, 245, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      color: #22312d;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
     }
     .meta {
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 18px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+    }
+    .meta-top {
+      display: grid;
+      gap: 10px;
+    }
+    .meta .eyebrow {
+      margin: 0;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: rgba(124, 90, 57, 0.88);
     }
     .meta h2 {
       margin: 0;
-      font-size: 34px;
-      line-height: 1.05;
+      font-size: clamp(36px, 5vw, 54px);
+      line-height: 0.94;
+      letter-spacing: -0.07em;
+      color: #17201d;
+    }
+    .meta-subtitle {
+      margin: 0;
+      font-size: clamp(15px, 1.8vw, 22px);
+      line-height: 1.2;
+      color: rgba(23, 32, 29, 0.92);
     }
     .meta p {
       margin: 0;
       color: var(--text-soft);
-      line-height: 1.75;
+      line-height: 1.68;
       font-size: 15px;
     }
     .link {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       width: fit-content;
-      padding: 12px 18px;
+      padding: 13px 22px;
       border-radius: 999px;
       background: #132822;
       color: #fff;
       font-size: 14px;
+      letter-spacing: 0.04em;
+    }
+    .card.zmagine .card-media img {
+      object-position: center 18%;
+    }
+    .card.zmagine .card-media {
+      background:
+        radial-gradient(circle at top left, rgba(57, 150, 216, 0.16), transparent 28%),
+        linear-gradient(180deg, rgba(231, 240, 247, 0.92), rgba(208, 223, 236, 0.84));
+    }
+    .card.openclaw .card-media img {
+      object-position: center 18%;
+    }
+    .card.openclaw .meta {
+      background:
+        radial-gradient(circle at top right, rgba(217, 109, 53, 0.08), transparent 28%),
+        rgba(255, 251, 245, 0.82);
     }
     @media (max-width: 860px) {
-      .card { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      .card {
+        padding: 16px;
+        border-radius: 28px;
+      }
+      .card::after {
+        right: 8px;
+      }
+      .meta {
+        padding: 16px 16px 18px;
+      }
       .content, .topbar { padding-left: 16px; padding-right: 16px; }
     }
   </style>
@@ -139,25 +240,33 @@
       <h1>分享与公开实验</h1>
       <p class="intro">这里收敛我的公开分享、实践复盘和专题表达。现在已经把 OpenClaw 实验分享和 Zmagine 技术大会分享都接进来了，后续继续按这个结构扩展。</p>
       <div class="cards">
-        <a class="card" href="/talks/zmagine-tech-conference/">
-          <img src="/talks/zmagine-tech-conference/assets/images/intro-tech-poster.jpeg" alt="Zmagine 技术大会分享封面" />
+        <a class="card zmagine" href="/talks/zmagine-tech-conference/">
+          <div class="card-media">
+            <img src="/talks/zmagine-tech-conference/assets/images/intro-art-portrait.jpeg" alt="Zmagine 技术大会分享封面" />
+            <span class="card-badge">Shenzhen · April 2026</span>
+          </div>
           <div class="meta">
-            <div>
+            <div class="meta-top">
               <div class="eyebrow">April 2026</div>
               <h2>Zmagine 技术大会分享</h2>
-              <p>围绕 Zmagine 的 AI 编译系统、flow / step 编排、unit 运行时、测试治理和企业级工程化闭环展开的一次公开分享。</p>
+              <p class="meta-subtitle">围绕 AI 编译系统、flow / step 编排、unit 运行时与工程化治理的一次公开分享</p>
             </div>
+            <p>把从 PRD 到蓝图、从 unit 到运行时、从测试到 GitOps 的完整链路拆开讲清楚，适合从头理解 Zmagine 这条路线。</p>
             <span class="link">进入分享页</span>
           </div>
         </a>
-        <a class="card" href="/talks/openclaw-first-experiment/">
-          <img src="/talks/openclaw-first-experiment/assets/graphics/intro-cover.jpg" alt="OpenClaw 分享封面" />
+        <a class="card openclaw" href="/talks/openclaw-first-experiment/">
+          <div class="card-media">
+            <img src="/talks/openclaw-first-experiment/assets/graphics/intro-cover.jpg" alt="OpenClaw 分享封面" />
+            <span class="card-badge">OpenClaw · March 2026</span>
+          </div>
           <div class="meta">
-            <div>
+            <div class="meta-top">
               <div class="eyebrow">March 2026</div>
               <h2>AI不只是写代码</h2>
-              <p>OpenClaw 在创作工作流里的第一次公开实验。围绕买票、旅行规划、浏览器自动化、视频剪辑、公众号创作与 OpenClaw 工程化实践展开。</p>
+              <p class="meta-subtitle">OpenClaw 在创作工作流里的第一次公开实验</p>
             </div>
+            <p>从买票、旅行规划、浏览器自动化、视频剪辑到公众号创作，再到为什么我还在折腾 OpenClaw，把真实工作流讲清楚。</p>
             <span class="link">进入分享页</span>
           </div>
         </a>
