@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F7F4"/>
+      <stop offset="1" stop-color="#F2EEE8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#111111" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M0 0L12 6L0 12Z" fill="#B5AEA1"/>
+    </marker>
+    <style>
+      .title{font:700 42px Arial,'PingFang SC',sans-serif;fill:#242424}
+      .sub{font:20px Arial,'PingFang SC',sans-serif;fill:#857F75}
+      .section{font:700 22px Arial,'PingFang SC',sans-serif;fill:#242424}
+      .body{font:18px Arial,'PingFang SC',sans-serif;fill:#5F5A52}
+      .small{font:16px Arial,'PingFang SC',sans-serif;fill:#7A756D}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <text x="100" y="118" font-family="Arial,'PingFang SC',sans-serif" font-size="18" font-weight="700" fill="#2CA389">TDD 到 GitOps</text>
+  <text x="100" y="170" class="title">验证、回放、发布闸门和 GitOps 必须属于同一条链。</text>
+  <text x="100" y="205" class="sub">如果它们还是分散的，系统最终就会退化回“生成完再补流程”的旧范式。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="110" y="320" width="220" height="148" rx="26" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="140" y="370" class="section">测试基线</text>
+    <text x="140" y="410" class="body">Unit / Integration / Replay</text>
+
+    <rect x="390" y="320" width="220" height="148" rx="26" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="420" y="370" class="section">回放证据</text>
+    <text x="420" y="410" class="body">失败样本绑定当前蓝图版本</text>
+
+    <rect x="670" y="320" width="220" height="148" rx="26" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="700" y="370" class="section">发布闸门</text>
+    <text x="700" y="410" class="body">VIP / 风险租户需要人工确认</text>
+
+    <rect x="950" y="320" width="220" height="148" rx="26" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="980" y="370" class="section">GitOps 变更集</text>
+    <text x="980" y="410" class="body">环境差异、灰度比例、回滚阈值</text>
+
+    <rect x="1230" y="320" width="220" height="148" rx="26" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="1260" y="370" class="section">运行观测</text>
+    <text x="1260" y="410" class="body">Trace / Metrics / Incident / Rollback</text>
+  </g>
+
+  <path d="M330 394H380" stroke="#BDB5A8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M610 394H660" stroke="#BDB5A8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M890 394H940" stroke="#BDB5A8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M1170 394H1220" stroke="#BDB5A8" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="180" y="560" width="1240" height="190" rx="34" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="220" y="612" class="section">邮件主线在这里会发生什么？</text>
+    <text x="220" y="652" class="body">附件 OCR 失败时，Replay 会保留降级样本；Draft 输出不合规时，发布闸门不放行；</text>
+    <text x="220" y="688" class="body">进入 prod-b 后，如果采纳率或错误率越界，GitOps 配置会把 ring-b 自动回退到上一版。</text>
+    <rect x="220" y="710" width="1160" height="22" rx="11" fill="#F4F0E7"/>
+    <text x="238" y="726" class="small">真正重要的不是“会不会发版”，而是每个发版决定都能追溯到蓝图、测试和运行证据。</text>
+  </g>
+</svg>

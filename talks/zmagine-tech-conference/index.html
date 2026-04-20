@@ -1,0 +1,3032 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/talks/zmagine-tech-conference/" />
+    <title>Zmagine 技术大会分享 | CACO PRO</title>
+    <meta
+      name="description"
+      content="围绕 Zmagine 的 AI 编译系统、flow / step 编排、unit 运行时与工程化治理的一次公开技术分享。"
+    />
+    <link rel="canonical" href="https://cacopro.vip/talks/zmagine-tech-conference/" />
+    <meta property="og:title" content="Zmagine 技术大会分享 | CACO PRO" />
+    <meta
+      property="og:description"
+      content="围绕 Zmagine 的 AI 编译系统、flow / step 编排、unit 运行时与工程化治理的一次公开技术分享。"
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://cacopro.vip/talks/zmagine-tech-conference/" />
+    <meta
+      property="og:image"
+      content="https://cacopro.vip/talks/zmagine-tech-conference/assets/images/intro-tech-poster.jpeg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=switzer@400,500,600&display=swap"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+        overflow-x: hidden;
+      }
+
+      html {
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+      }
+
+      :root {
+        --bg: #f4f2ed;
+        --panel: rgba(255, 255, 255, 0.74);
+        --panel-strong: rgba(255, 255, 255, 0.92);
+        --panel-dark: rgba(22, 24, 28, 0.9);
+        --ink: #16181c;
+        --ink-soft: #5b616d;
+        --ink-faint: #8c919d;
+        --line: rgba(25, 27, 31, 0.1);
+        --shadow:
+          0 0 0 1px rgba(34, 42, 53, 0.08),
+          0 20px 50px rgba(17, 21, 26, 0.08),
+          0 6px 14px rgba(17, 21, 26, 0.06);
+        --accent: #29af8c;
+        --accent-blue: #3d9ccc;
+        --accent-soft: rgba(41, 175, 140, 0.14);
+        --accent-blue-soft: rgba(61, 156, 204, 0.14);
+        --warning: #c9492c;
+        --radius-xl: 32px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+        --radius-sm: 12px;
+        --slide-padding: clamp(28px, 4vw, 52px);
+        --content-gap: clamp(18px, 2.2vw, 28px);
+        --display: clamp(44px, 7vw, 86px);
+        --title: clamp(28px, 4vw, 48px);
+        --subtitle: clamp(16px, 1.8vw, 22px);
+        --body: clamp(13px, 1.3vw, 18px);
+        --small: clamp(11px, 1vw, 14px);
+        --font-display: "Cabinet Grotesk", "PingFang SC", sans-serif;
+        --font-body: "Switzer", "PingFang SC", sans-serif;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 12% 18%, rgba(41, 175, 140, 0.14), transparent 28%),
+          radial-gradient(circle at 88% 16%, rgba(61, 156, 204, 0.12), transparent 26%),
+          linear-gradient(180deg, #f6f4ef 0%, #efede7 100%);
+        color: var(--ink);
+        font-family: var(--font-body);
+        overscroll-behavior-y: contain;
+      }
+
+      .slide {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        display: flex;
+        position: relative;
+      }
+
+      .site-backlink {
+        position: fixed;
+        top: 20px;
+        left: 22px;
+        z-index: 1001;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(22, 24, 28, 0.12);
+        background: rgba(255, 255, 255, 0.82);
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        box-shadow: 0 10px 24px rgba(17, 21, 26, 0.08);
+        backdrop-filter: blur(10px);
+      }
+
+      .site-backlink:hover {
+        background: rgba(255, 255, 255, 0.96);
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: var(--slide-padding);
+        max-height: 100%;
+        overflow: hidden;
+      }
+
+      .event-brand-slide::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(245, 251, 255, 0.08), rgba(15, 20, 28, 0.06) 34%, rgba(9, 14, 20, 0.22) 100%),
+          url("./assets/images/tencent-event-skyline.jpeg") center / cover no-repeat;
+        opacity: 1;
+        pointer-events: none;
+      }
+
+      .event-brand-slide .slide-content,
+      .event-brand-slide .slide-index,
+      .event-brand-slide .footer-note {
+        position: relative;
+        z-index: 1;
+      }
+
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+      }
+
+      .progress span {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--accent), var(--accent-blue));
+        transition: width 0.35s ease;
+      }
+
+      .nav-dots {
+        position: fixed;
+        top: 50%;
+        right: 22px;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        z-index: 1000;
+      }
+
+      .nav-dots button {
+        width: 10px;
+        height: 10px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(22, 24, 28, 0.18);
+        cursor: pointer;
+        transition:
+          transform 0.24s ease,
+          background 0.24s ease;
+      }
+
+      .nav-dots button.active {
+        transform: scale(1.45);
+        background: linear-gradient(180deg, var(--accent), var(--accent-blue));
+      }
+
+      .slide-index {
+        position: absolute;
+        top: 24px;
+        right: 28px;
+        font-size: var(--small);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(22, 24, 28, 0.46);
+      }
+
+      .eyebrow {
+        font-size: var(--small);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--font-display);
+        line-height: 0.94;
+        letter-spacing: -0.04em;
+      }
+
+      h1 {
+        font-size: var(--display);
+      }
+
+      h2 {
+        font-size: var(--title);
+      }
+
+      h3 {
+        font-size: clamp(20px, 2vw, 28px);
+      }
+
+      p,
+      li,
+      td,
+      th {
+        font-size: var(--body);
+        line-height: 1.45;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: translateY(0);
+        transition: none;
+      }
+
+      .slide.visible .reveal,
+      .slide:first-of-type .reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .reveal:nth-child(1) {
+        transition-delay: 0.08s;
+      }
+      .reveal:nth-child(2) {
+        transition-delay: 0.16s;
+      }
+      .reveal:nth-child(3) {
+        transition-delay: 0.24s;
+      }
+      .reveal:nth-child(4) {
+        transition-delay: 0.32s;
+      }
+      .reveal:nth-child(5) {
+        transition-delay: 0.4s;
+      }
+
+      .hero-shell,
+      .page-shell,
+      .product-shell,
+      .comparison-shell,
+      .closing-shell {
+        width: min(1240px, 100%);
+        margin: 0 auto;
+        height: 100%;
+        max-height: 100%;
+        display: grid;
+        gap: var(--content-gap);
+      }
+
+      .hero-shell {
+        grid-template-columns: 1.25fr 0.75fr;
+        align-items: stretch;
+      }
+
+      .hero-copy,
+      .hero-side,
+      .page-panel,
+      .product-frame,
+      .comparison-panel,
+      .closing-panel {
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero-copy {
+        background:
+          linear-gradient(145deg, rgba(21, 22, 26, 0.94), rgba(25, 29, 35, 0.9)),
+          linear-gradient(180deg, rgba(41, 175, 140, 0.16), transparent);
+        padding: clamp(28px, 4vw, 48px);
+        color: #f5f4ef;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .hero-copy .eyebrow,
+      .hero-copy p {
+        color: rgba(245, 244, 239, 0.76);
+      }
+
+      .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.8);
+        font-size: var(--small);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .hero-line {
+        width: 86px;
+        height: 3px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-blue));
+      }
+
+      .hero-points {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .hero-point {
+        padding: 16px;
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .hero-point strong {
+        display: block;
+        margin-bottom: 6px;
+        font-family: var(--font-display);
+        font-size: clamp(16px, 1.6vw, 22px);
+      }
+
+      .hero-side {
+        background: var(--panel);
+        backdrop-filter: blur(18px);
+        padding: 22px;
+        display: grid;
+        gap: 16px;
+        align-content: start;
+        color: var(--ink);
+      }
+
+      .speaker-card,
+      .agenda-card,
+      .metric-chip,
+      .mini-diagram,
+      .logic-card,
+      .issue-card,
+      .spec-card,
+      .panel-card,
+      .artifact-card,
+      .archon-card,
+      .business-card {
+        border-radius: var(--radius-md);
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+      }
+
+      .speaker-card {
+        padding: 20px;
+      }
+
+      .speaker-card strong {
+        font-family: var(--font-display);
+        font-size: clamp(24px, 2vw, 32px);
+      }
+
+      .speaker-card span {
+        display: block;
+        color: var(--ink-soft);
+        margin-top: 6px;
+      }
+
+      .hero-side .eyebrow,
+      .hero-side p,
+      .hero-side strong {
+        color: var(--ink);
+      }
+
+      .hero-side .agenda-card p,
+      .hero-side .agenda-card .soft {
+        color: var(--ink-soft);
+      }
+
+      .agenda-card {
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .agenda-item {
+        display: flex;
+        gap: 14px;
+        align-items: start;
+      }
+
+      .agenda-no {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+      }
+
+      .page-shell {
+        grid-template-rows: auto 1fr;
+      }
+
+      .headline-row {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+
+      .page-shell .headline-row h2,
+      .page-shell .headline-row h3 {
+        color: #171b22 !important;
+      }
+
+      .page-shell .headline-row .eyebrow {
+        color: #5f6c7a !important;
+      }
+
+      .headline-row p {
+        color: #5c6774 !important;
+        max-width: 900px;
+      }
+
+      .headline-row.compact {
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: end;
+      }
+
+      .headline-meta {
+        display: flex;
+        justify-content: end;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .meta-chip {
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.68);
+        border: 1px solid var(--line);
+        color: var(--ink-soft);
+        font-size: var(--small);
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        display: grid;
+        gap: 18px;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .page-panel {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.86));
+        border: 1px solid rgba(22, 24, 28, 0.06);
+        padding: 24px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .stat-card {
+        padding: 18px;
+        border-radius: var(--radius-md);
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        display: grid;
+        gap: 10px;
+      }
+
+      .stat-card strong {
+        font-family: var(--font-display);
+        font-size: clamp(34px, 3vw, 48px);
+        line-height: 1;
+      }
+
+      .image-card {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        overflow: hidden;
+      }
+
+      .image-card img {
+        width: 100%;
+        height: 100%;
+        max-height: unset;
+        object-fit: cover;
+      }
+
+      .image-card figcaption {
+        padding: 14px 16px 16px;
+        color: var(--ink-soft);
+        background: rgba(255, 255, 255, 0.88);
+      }
+
+      .screenshot-panel {
+        padding: 18px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .prototype-shot {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 20px;
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        box-shadow: 0 20px 40px rgba(17, 21, 26, 0.08);
+      }
+
+      .fit-graphic-stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 560px;
+      }
+
+      .fit-graphic-stage .prototype-shot {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      .caption-grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .timeline {
+        display: grid;
+        gap: 10px;
+      }
+
+      .timeline-row {
+        display: grid;
+        grid-template-columns: 84px 1fr;
+        gap: 14px;
+        align-items: start;
+        padding: 12px 0;
+        border-bottom: 1px dashed rgba(22, 24, 28, 0.1);
+      }
+
+      .timeline-year {
+        font-family: var(--font-display);
+        font-size: clamp(18px, 1.8vw, 24px);
+      }
+
+      .resume-grid {
+        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+        align-items: start;
+      }
+
+      .resume-panel {
+        padding: 18px;
+        gap: 12px;
+      }
+
+      .resume-panel .timeline {
+        gap: 0;
+      }
+
+      .resume-panel .timeline-row {
+        grid-template-columns: 78px 1fr;
+        gap: 16px;
+        padding: 8px 0;
+      }
+
+      .resume-panel .timeline-copy strong {
+        font-size: 16px;
+      }
+
+      .resume-panel .timeline-copy span {
+        display: block;
+        margin-top: 2px;
+        font-size: 14px;
+      }
+
+      .resume-grid .image-card img {
+        height: 520px;
+        object-fit: cover;
+        object-position: top center;
+      }
+
+      .resume-inline-note {
+        color: var(--ink-soft);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .timeline-copy span,
+      .muted,
+      .soft {
+        color: var(--ink-soft);
+      }
+
+      .logic-card,
+      .issue-card,
+      .spec-card,
+      .panel-card,
+      .artifact-card,
+      .business-card {
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .logic-card strong,
+      .issue-card strong,
+      .spec-card strong,
+      .panel-card strong,
+      .artifact-card strong,
+      .business-card strong {
+        font-family: var(--font-display);
+        font-size: clamp(18px, 1.9vw, 24px);
+      }
+
+      .mini-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 11px;
+        border-radius: 999px;
+        font-size: var(--small);
+        color: var(--ink-soft);
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid var(--line);
+      }
+
+      .bullet-stack {
+        display: grid;
+        gap: 10px;
+      }
+
+      .bullet {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 10px;
+        align-items: start;
+      }
+
+      .bullet-marker {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--accent-soft), rgba(61, 156, 204, 0.1));
+        color: var(--ink);
+        display: grid;
+        place-items: center;
+        font-size: var(--small);
+        font-weight: 700;
+      }
+
+      .quote-band {
+        padding: 20px 22px;
+        border-radius: var(--radius-lg);
+        background: linear-gradient(120deg, rgba(235, 248, 243, 0.96), rgba(235, 244, 250, 0.96));
+        border: 1px solid rgba(41, 175, 140, 0.16);
+      }
+
+      .quote-band p {
+        font-family: var(--font-display);
+        font-size: clamp(22px, 2.3vw, 34px);
+        line-height: 1.1;
+        color: #171b22;
+      }
+
+      .yaml-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.22fr) minmax(300px, 0.78fr);
+        gap: 8px;
+        align-items: stretch;
+      }
+
+      .yaml-stage {
+        padding: 8px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, #181f27, #121920);
+        border: 1px solid rgba(129, 146, 169, 0.18);
+        box-shadow: 0 18px 36px rgba(16, 22, 29, 0.16);
+        display: grid;
+        gap: 6px;
+      }
+
+      .yaml-row {
+        display: grid;
+        gap: 6px;
+      }
+
+      .yaml-row.top {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
+      }
+
+      .yaml-row.bottom {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .yaml-block {
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(129, 146, 169, 0.14);
+        padding: 9px 10px;
+        display: grid;
+        gap: 4px;
+      }
+
+      .yaml-header {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .yaml-code {
+        display: grid;
+        gap: 3px;
+        font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+        font-size: 11.4px;
+        line-height: 1.15;
+        color: #eef3f8;
+      }
+
+      .yaml-line {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .yaml-indent-1 { padding-left: 14px; }
+      .yaml-indent-2 { padding-left: 28px; }
+      .yaml-indent-3 { padding-left: 42px; }
+
+      .yaml-key { color: #f3d387; }
+      .yaml-node { color: #84e4ab; }
+      .yaml-value { color: #7ad7ff; }
+      .yaml-punc { color: rgba(238, 243, 248, 0.92); }
+
+      .yaml-notes {
+        display: grid;
+        gap: 8px;
+      }
+
+      .yaml-note {
+        border-radius: 20px;
+        background: rgba(240, 246, 252, 0.9);
+        border: 1px solid rgba(22, 24, 28, 0.06);
+        padding: 10px 12px;
+        display: grid;
+        gap: 4px;
+      }
+
+      .yaml-note strong {
+        font-family: var(--font-display);
+        font-size: clamp(16px, 1.5vw, 20px);
+      }
+
+      .yaml-note p {
+        color: var(--ink-soft);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .operator-layout,
+      .mapping-layout,
+      .evidence-layout {
+        display: grid;
+        gap: 16px;
+      }
+
+      .operator-layout {
+        grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+        align-items: stretch;
+      }
+
+      .code-stage {
+        border-radius: 24px;
+        background: linear-gradient(180deg, #181f27, #121920);
+        border: 1px solid rgba(129, 146, 169, 0.18);
+        box-shadow: 0 18px 36px rgba(16, 22, 29, 0.16);
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .code-stage .eyebrow {
+        color: var(--accent);
+        margin: 0;
+      }
+
+      .code-stage h3 {
+        font-family: var(--font-display);
+        font-size: clamp(24px, 1.8vw, 30px);
+        color: #f4f7fb;
+      }
+
+      .code-stage p {
+        color: rgba(235, 242, 248, 0.72);
+      }
+
+      .code-card {
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(129, 146, 169, 0.14);
+        padding: 14px 16px;
+        overflow: hidden;
+      }
+
+      .code-card pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+        font-size: 12.8px;
+        line-height: 1.34;
+        color: #eef3f8;
+      }
+
+      .code-token-comment { color: #f3d387; }
+      .code-token-keyword { color: #7ad7ff; }
+      .code-token-type { color: #84e4ab; }
+
+      .stack-notes {
+        display: grid;
+        gap: 10px;
+      }
+
+      .stack-note {
+        border-radius: 20px;
+        background: rgba(240, 246, 252, 0.92);
+        border: 1px solid rgba(22, 24, 28, 0.06);
+        padding: 14px;
+        display: grid;
+        gap: 6px;
+      }
+
+      .stack-note strong {
+        font-family: var(--font-display);
+        font-size: clamp(18px, 1.5vw, 22px);
+      }
+
+      .stack-note p {
+        color: var(--ink-soft);
+      }
+
+      .mapping-layout {
+        grid-template-columns: minmax(280px, 0.95fr) 88px minmax(360px, 1.1fr);
+        align-items: center;
+      }
+
+      .mapping-column {
+        display: grid;
+        gap: 12px;
+      }
+
+      .mapping-column h3 {
+        font-family: var(--font-display);
+        font-size: clamp(24px, 1.9vw, 30px);
+      }
+
+      .mapping-card {
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        padding: 16px 18px;
+        display: grid;
+        gap: 6px;
+      }
+
+      .mapping-card strong {
+        font-family: var(--font-display);
+        font-size: clamp(18px, 1.5vw, 22px);
+      }
+
+      .mapping-card p {
+        color: var(--ink-soft);
+      }
+
+      .arrow-column {
+        display: grid;
+        gap: 22px;
+        justify-items: center;
+      }
+
+      .arrow-chip {
+        width: 100%;
+        min-height: 64px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        color: var(--ink-soft);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        background: linear-gradient(180deg, rgba(41, 175, 140, 0.08), rgba(61, 156, 204, 0.08));
+        border: 1px solid rgba(41, 175, 140, 0.12);
+        clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%, 12% 50%);
+      }
+
+      .mapping-summary {
+        grid-column: 1 / -1;
+        border-radius: 20px;
+        background: linear-gradient(120deg, rgba(41, 175, 140, 0.12), rgba(61, 156, 204, 0.12));
+        border: 1px solid rgba(41, 175, 140, 0.14);
+        padding: 16px 18px;
+        color: var(--ink);
+      }
+
+      .evidence-layout {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .evidence-card {
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .evidence-card strong {
+        font-family: var(--font-display);
+        font-size: clamp(20px, 1.6vw, 24px);
+      }
+
+      .evidence-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .evidence-item {
+        display: grid;
+        gap: 4px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: rgba(41, 175, 140, 0.06);
+        border: 1px solid rgba(41, 175, 140, 0.1);
+      }
+
+      .evidence-item span {
+        color: var(--ink-soft);
+        font-size: 13px;
+      }
+
+      .evidence-strip {
+        grid-column: 1 / -1;
+        border-radius: 20px;
+        background: linear-gradient(120deg, rgba(41, 175, 140, 0.12), rgba(61, 156, 204, 0.12));
+        border: 1px solid rgba(41, 175, 140, 0.14);
+        padding: 16px 18px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .evidence-rail {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .evidence-rail div {
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(22, 24, 28, 0.06);
+        padding: 10px 12px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink-soft);
+      }
+
+      .operator-layout,
+      .mapping-layout,
+      .evidence-layout {
+        display: grid;
+        gap: 16px;
+      }
+
+      .operator-layout {
+        grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.96fr);
+        align-items: stretch;
+      }
+
+      .code-stage {
+        border-radius: 24px;
+        background: linear-gradient(180deg, #181f27, #121920);
+        border: 1px solid rgba(129, 146, 169, 0.18);
+        box-shadow: 0 18px 36px rgba(16, 22, 29, 0.16);
+        padding: 22px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .code-stage .eyebrow {
+        color: var(--accent);
+        margin: 0;
+      }
+
+      .code-stage h3 {
+        font-family: var(--font-display);
+        font-size: clamp(28px, 2vw, 36px);
+        color: #f4f7fb;
+      }
+
+      .code-stage p {
+        color: rgba(235, 242, 248, 0.72);
+      }
+
+      .code-card {
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(129, 146, 169, 0.14);
+        padding: 18px 20px;
+        overflow: hidden;
+      }
+
+      .code-card pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+        font-size: 15px;
+        line-height: 1.55;
+        color: #eef3f8;
+      }
+
+      .code-token-comment { color: #f3d387; }
+      .code-token-keyword { color: #7ad7ff; }
+      .code-token-type { color: #84e4ab; }
+
+      .stack-notes {
+        display: grid;
+        gap: 14px;
+      }
+
+      .stack-note {
+        border-radius: 20px;
+        background: rgba(240, 246, 252, 0.92);
+        border: 1px solid rgba(22, 24, 28, 0.06);
+        padding: 18px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .stack-note strong {
+        font-family: var(--font-display);
+        font-size: clamp(20px, 1.7vw, 24px);
+      }
+
+      .stack-note p {
+        color: var(--ink-soft);
+      }
+
+      .mapping-layout {
+        grid-template-columns: minmax(280px, 0.95fr) 88px minmax(360px, 1.1fr);
+        align-items: center;
+      }
+
+      .mapping-column {
+        display: grid;
+        gap: 12px;
+      }
+
+      .mapping-column h3 {
+        font-family: var(--font-display);
+        font-size: clamp(24px, 1.9vw, 30px);
+      }
+
+      .mapping-card {
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        padding: 16px 18px;
+        display: grid;
+        gap: 6px;
+      }
+
+      .mapping-card strong {
+        font-family: var(--font-display);
+        font-size: clamp(18px, 1.5vw, 22px);
+      }
+
+      .mapping-card p {
+        color: var(--ink-soft);
+      }
+
+      .arrow-column {
+        display: grid;
+        gap: 22px;
+        justify-items: center;
+      }
+
+      .arrow-chip {
+        width: 100%;
+        min-height: 64px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        color: var(--ink-soft);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        background: linear-gradient(180deg, rgba(41, 175, 140, 0.08), rgba(61, 156, 204, 0.08));
+        border: 1px solid rgba(41, 175, 140, 0.12);
+        clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%, 12% 50%);
+      }
+
+      .mapping-summary {
+        grid-column: 1 / -1;
+        border-radius: 20px;
+        background: linear-gradient(120deg, rgba(41, 175, 140, 0.12), rgba(61, 156, 204, 0.12));
+        border: 1px solid rgba(41, 175, 140, 0.14);
+        padding: 16px 18px;
+        color: var(--ink);
+      }
+
+      .evidence-layout {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .evidence-card {
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .evidence-card strong {
+        font-family: var(--font-display);
+        font-size: clamp(20px, 1.6vw, 24px);
+      }
+
+      .evidence-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .evidence-item {
+        display: grid;
+        gap: 4px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: rgba(41, 175, 140, 0.06);
+        border: 1px solid rgba(41, 175, 140, 0.1);
+      }
+
+      .evidence-item span {
+        color: var(--ink-soft);
+        font-size: 13px;
+      }
+
+      .evidence-strip {
+        grid-column: 1 / -1;
+        border-radius: 20px;
+        background: linear-gradient(120deg, rgba(41, 175, 140, 0.12), rgba(61, 156, 204, 0.12));
+        border: 1px solid rgba(41, 175, 140, 0.14);
+        padding: 16px 18px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .evidence-rail {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .evidence-rail div {
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(22, 24, 28, 0.06);
+        padding: 10px 12px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink-soft);
+      }
+
+      .architecture-board {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+      }
+
+      .architecture-stack {
+        display: grid;
+        gap: 14px;
+      }
+
+      .layer-card {
+        padding: 18px 20px;
+        border-radius: var(--radius-lg);
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 0.25fr 1fr;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .layer-tag {
+        padding: 14px;
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, var(--accent-soft), rgba(61, 156, 204, 0.08));
+        text-align: center;
+        font-family: var(--font-display);
+      }
+
+      .flow-rail {
+        display: grid;
+        gap: 12px;
+      }
+
+      .flow-step {
+        padding: 16px;
+        border-radius: var(--radius-md);
+        background: var(--panel-dark);
+        color: rgba(255, 255, 255, 0.86);
+        display: grid;
+        gap: 8px;
+      }
+
+      .flow-step strong {
+        font-family: var(--font-display);
+      }
+
+      .product-shell {
+        grid-template-columns: 290px 1fr;
+        gap: 20px;
+      }
+
+      .product-sidebar {
+        background: linear-gradient(180deg, rgba(19, 21, 25, 0.96), rgba(30, 33, 39, 0.92));
+        color: rgba(255, 255, 255, 0.86);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow);
+        padding: 22px 18px;
+        display: grid;
+        gap: 16px;
+        align-content: start;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: linear-gradient(145deg, var(--accent), var(--accent-blue));
+        position: relative;
+      }
+
+      .brand-mark::after {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border-radius: 10px;
+        background: rgba(17, 21, 26, 0.74);
+      }
+
+      .brand-copy strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 26px;
+      }
+
+      .brand-copy span {
+        color: rgba(255, 255, 255, 0.62);
+        font-size: var(--small);
+      }
+
+      .sidebar-group {
+        display: grid;
+        gap: 8px;
+      }
+
+      .sidebar-title {
+        font-size: var(--small);
+        color: rgba(255, 255, 255, 0.44);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .nav-item {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-item.active {
+        background: linear-gradient(90deg, rgba(41, 175, 140, 0.18), rgba(61, 156, 204, 0.14));
+        color: white;
+      }
+
+      .status-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 0 5px rgba(41, 175, 140, 0.1);
+      }
+
+      .product-frame {
+        background: rgba(255, 255, 255, 0.66);
+        border: 1px solid rgba(22, 24, 28, 0.06);
+        backdrop-filter: blur(24px);
+        padding: 18px;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 16px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .topbar-left,
+      .topbar-right {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .top-chip {
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.76);
+        border: 1px solid var(--line);
+        font-size: var(--small);
+        color: var(--ink-soft);
+      }
+
+      .workspace {
+        display: grid;
+        gap: 16px;
+        min-height: 0;
+      }
+
+      .workspace.two-col {
+        grid-template-columns: 0.92fr 1.08fr;
+      }
+
+      .workspace.three-col {
+        grid-template-columns: 0.72fr 1.1fr 0.7fr;
+      }
+
+      .module {
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        padding: 16px;
+        display: grid;
+        gap: 12px;
+        min-height: 0;
+      }
+
+      .module-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .module-header strong {
+        font-family: var(--font-display);
+        font-size: clamp(18px, 1.5vw, 22px);
+      }
+
+      .section-list,
+      .field-list,
+      .event-list,
+      .mini-table,
+      .yaml-lines {
+        display: grid;
+        gap: 10px;
+      }
+
+      .field-row,
+      .event-row,
+      .section-row {
+        display: grid;
+        gap: 6px;
+        padding: 12px;
+        border-radius: 14px;
+        background: rgba(244, 242, 237, 0.85);
+      }
+
+      .field-row .label,
+      .event-row .label,
+      .section-row .label {
+        font-size: var(--small);
+        color: var(--ink-faint);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .yaml-lines code,
+      .code-note {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: clamp(12px, 1vw, 14px);
+        line-height: 1.45;
+      }
+
+      .yaml-lines code {
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #171a1f;
+        color: #f7f8fb;
+        display: block;
+        white-space: pre-wrap;
+      }
+
+      .node-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .node-card {
+        padding: 14px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 245, 248, 0.96));
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        display: grid;
+        gap: 10px;
+      }
+
+      .node-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .node-state {
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: var(--small);
+        background: rgba(41, 175, 140, 0.1);
+        color: #138567;
+      }
+
+      .lane-board {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .lane {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        display: grid;
+        gap: 12px;
+      }
+
+      .lane-title {
+        font-family: var(--font-display);
+        font-size: clamp(16px, 1.4vw, 20px);
+      }
+
+      .task {
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(244, 242, 237, 0.9);
+        border: 1px dashed rgba(22, 24, 28, 0.1);
+        font-size: var(--small);
+        line-height: 1.45;
+      }
+
+      .compare-table {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr 1fr;
+        gap: 10px;
+      }
+
+      .compare-row {
+        display: contents;
+      }
+
+      .compare-cell {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        min-height: 74px;
+      }
+
+      .compare-head {
+        background: linear-gradient(180deg, rgba(41, 175, 140, 0.12), rgba(61, 156, 204, 0.08));
+        font-family: var(--font-display);
+      }
+
+      .archon-code,
+      .business-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .business-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .closing-shell {
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: stretch;
+      }
+
+      .closing-panel {
+        padding: 28px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.9));
+        border: 1px solid rgba(22, 24, 28, 0.08);
+        display: grid;
+        gap: 18px;
+      }
+
+      .closing-panel.dark {
+        background: linear-gradient(180deg, rgba(16, 18, 22, 0.95), rgba(26, 31, 38, 0.92));
+        color: #f5f4ef;
+      }
+
+      .closing-panel.dark p,
+      .closing-panel.dark .soft {
+        color: rgba(245, 244, 239, 0.74);
+      }
+
+      .closing-panel.dark h2,
+      .closing-panel.dark h3,
+      .closing-panel.dark strong,
+      .closing-panel.dark .eyebrow {
+        color: #f5f4ef;
+      }
+
+      .quote-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .quote-item {
+        padding: 16px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .quote-item strong {
+        display: block;
+        font-family: var(--font-display);
+        margin-bottom: 6px;
+      }
+
+      .thanks-shell {
+        width: min(1160px, 100%);
+        margin: 0 auto;
+        min-height: calc(100% - 40px);
+        display: grid;
+        place-items: center;
+      }
+
+      .thanks-card {
+        width: min(980px, 100%);
+        min-height: 560px;
+        padding: 42px 48px;
+        border-radius: 36px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(24, 30, 38, 0.08);
+        box-shadow:
+          0 0 0 1px rgba(34, 42, 53, 0.05),
+          0 32px 68px rgba(18, 23, 30, 0.12);
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.72fr);
+        gap: 30px;
+        align-items: center;
+      }
+
+      .thanks-copy {
+        display: grid;
+        gap: 18px;
+        align-content: center;
+      }
+
+      .thanks-copy h2 {
+        font-size: clamp(72px, 10vw, 120px);
+        line-height: 0.9;
+        letter-spacing: -0.06em;
+        color: #101419;
+      }
+
+      .thanks-copy p {
+        font-size: clamp(18px, 2vw, 28px);
+        line-height: 1.35;
+        color: #4b5a68;
+      }
+
+      .thanks-copy .eyebrow {
+        color: #29af8c !important;
+      }
+
+      .thanks-qr-card {
+        padding: 24px;
+        border-radius: 30px;
+        background: rgba(248, 250, 252, 0.94);
+        border: 1px solid rgba(16, 20, 25, 0.08);
+        display: grid;
+        gap: 16px;
+        justify-items: center;
+      }
+
+      .thanks-qr-card img {
+        width: min(100%, 340px);
+        border-radius: 22px;
+        display: block;
+        box-shadow: 0 14px 34px rgba(19, 24, 29, 0.08);
+      }
+
+      .thanks-qr-placeholder {
+        width: min(100%, 340px);
+        aspect-ratio: 1 / 1;
+        border-radius: 22px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 18px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(245, 248, 251, 0.96)),
+          linear-gradient(135deg, rgba(41, 175, 140, 0.08), rgba(61, 156, 204, 0.08));
+        border: 1px dashed rgba(41, 175, 140, 0.35);
+        color: #2f475b;
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .thanks-qr-note {
+        font-size: 14px;
+        line-height: 1.45;
+        color: #5f6c79;
+        text-align: center;
+      }
+
+      .footer-note {
+        position: absolute;
+        bottom: 20px;
+        left: 30px;
+        color: rgba(22, 24, 28, 0.44);
+        font-size: var(--small);
+      }
+
+      .dark-slide {
+        background:
+          radial-gradient(circle at 16% 18%, rgba(41, 175, 140, 0.16), transparent 25%),
+          radial-gradient(circle at 82% 22%, rgba(61, 156, 204, 0.14), transparent 24%),
+          linear-gradient(180deg, #111419 0%, #1a1d23 100%);
+        color: #f5f4ef;
+      }
+
+      .dark-slide .slide-index,
+      .dark-slide .eyebrow,
+      .dark-slide p,
+      .dark-slide li,
+      .dark-slide .soft,
+      .dark-slide .footer-note {
+        color: rgba(245, 244, 239, 0.72);
+      }
+
+      .dark-slide .page-panel,
+      .dark-slide .logic-card,
+      .dark-slide .issue-card,
+      .dark-slide .spec-card,
+      .dark-slide .panel-card,
+      .dark-slide .artifact-card,
+      .dark-slide .business-card,
+      .dark-slide .compare-cell {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .dark-slide .headline-row h2,
+      .dark-slide .headline-row h3 {
+        color: #f5f4ef !important;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.22);
+      }
+
+      .dark-slide .headline-row .eyebrow {
+        color: rgba(245, 244, 239, 0.84) !important;
+      }
+
+      .dark-slide .headline-row p {
+        color: rgba(245, 244, 239, 0.82) !important;
+      }
+
+      .dark-slide .meta-chip,
+      .dark-slide .mini-pill,
+      .dark-slide .top-chip,
+      .dark-slide .field-row,
+      .dark-slide .section-row,
+      .dark-slide .event-row,
+      .dark-slide .task,
+      .dark-slide .module,
+      .dark-slide .node-card {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.08);
+        color: #f5f4ef;
+      }
+
+      .dark-slide .quote-band {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .dark-slide .quote-band p {
+        color: #f5f4ef;
+      }
+
+      @media (max-width: 1100px) {
+        .hero-shell,
+        .closing-shell,
+        .architecture-board,
+        .product-shell,
+        .workspace.two-col,
+        .workspace.three-col,
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .business-grid,
+        .lane-board,
+        .compare-table,
+        .operator-layout,
+        .mapping-layout,
+        .evidence-layout,
+        .evidence-rail {
+          grid-template-columns: 1fr;
+        }
+
+        .headline-row.compact {
+          grid-template-columns: 1fr;
+        }
+
+        .arrow-column {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .nav-dots {
+          display: none;
+        }
+
+        .site-backlink {
+          top: 16px;
+          left: 16px;
+          padding: 9px 12px;
+          font-size: 11px;
+        }
+      }
+
+      @media (max-height: 700px) {
+        :root {
+          --display: clamp(34px, 5.2vw, 60px);
+          --title: clamp(22px, 3.1vw, 36px);
+          --body: clamp(12px, 1vw, 15px);
+          --slide-padding: clamp(18px, 3vw, 34px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.2s !important;
+        }
+
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="site-backlink" href="/talks/">返回分享目录</a>
+    <div class="progress"><span id="progressBar"></span></div>
+    <nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+
+    <section class="slide dark-slide event-brand-slide" id="slide-01">
+      <div class="slide-index">01 / 25</div>
+      <div class="slide-content">
+        <div class="hero-shell">
+          <div class="hero-copy">
+            <div class="reveal">
+              <div class="hero-kicker">深圳架构师城市沙龙 · 技术大会分享</div>
+            </div>
+            <div class="reveal" style="display: grid; gap: 18px">
+              <div class="eyebrow">AI 原生范式</div>
+              <h1>AI原生：解构从 PRD 到研发部署全流程范式</h1>
+              <p style="max-width: 760px">
+                把研发重写成 AI 可以稳定参与、可编排、可验证、可观测的生产系统。
+              </p>
+            </div>
+            <div class="reveal" style="display: grid; gap: 20px">
+              <div class="hero-line"></div>
+              <div class="hero-points">
+                <div class="hero-point">
+                  <strong>问题</strong>
+                  <span>AI 手替很强，但企业研发结构并没有真正准备好。</span>
+                </div>
+                <div class="hero-point">
+                  <strong>判断</strong>
+                  <span>真正的壁垒在约束、编排、验证、部署与资产化闭环。</span>
+                </div>
+                <div class="hero-point">
+                  <strong>主角</strong>
+                  <span>Zmagine 平台向上承接 PRD，向下由 ZFlow 编译与运行底座托住。</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-side">
+            <div class="speaker-card reveal">
+              <div class="eyebrow">讲师</div>
+              <strong>乔卓越</strong>
+              <span>Zmagine AI 创始人</span>
+              <span>AI 研发架构师</span>
+            </div>
+            <div class="agenda-card reveal">
+              <div class="eyebrow">本场主线</div>
+              <div class="agenda-item">
+                <div class="agenda-no">1</div>
+                <div>
+                  <strong>旧路线边界</strong>
+                  <p class="soft">为什么从氛围编程、Spec 到 Harness 仍然没有带来企业级质变</p>
+                </div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-no">2</div>
+                <div>
+                  <strong>AI 编译系统</strong>
+                  <p class="soft">为什么要引入编译、运行时、契约、治理和 GitOps 闭环</p>
+                </div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-no">3</div>
+                <div>
+                  <strong>真实平台主线</strong>
+                  <p class="soft">用企业邮件智能回复案例，走完 PRD 到上线的完整链路</p>
+                </div>
+              </div>
+            </div>
+            <div class="quote-band reveal">
+              <p>“生产系统决定 AI 研发的最终上限。”</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-02">
+      <div class="slide-index">02 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">关于我 · 技术面</div>
+              <h2>企业级后端、架构、云原生、AI 工程化。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">2019 → 2026</div>
+              <div class="meta-chip">基础设施 / 游戏业务 / 企业 AI 平台</div>
+            </div>
+          </div>
+          <div class="grid-2 resume-grid">
+            <figure class="page-panel image-card reveal">
+              <img src="./assets/images/intro-tech-poster.jpeg" alt="腾讯云架构师同盟海报" />
+              <figcaption>腾讯云架构师同盟：云原生、后端架构与复杂系统交付，是我今天这场分享的方法论起点。</figcaption>
+            </figure>
+            <div class="page-panel reveal resume-panel">
+              <div class="eyebrow">履历时间轴</div>
+              <div class="timeline">
+                <div class="timeline-row">
+                  <div class="timeline-year">2026</div>
+                  <div class="timeline-copy"><strong>创办 Zmagine</strong><span>研发企业 AI 应用的大脑平台 / 新媒体影响力建设</span></div>
+                </div>
+                <div class="timeline-row">
+                  <div class="timeline-year">2024</div>
+                  <div class="timeline-copy"><strong>字节跳动 · 后端技术负责人</strong><span>AI 工程化实践 Top 1% 纪录保持者</span></div>
+                </div>
+                <div class="timeline-row">
+                  <div class="timeline-year">2022</div>
+                  <div class="timeline-copy"><strong>腾讯游戏 · 云原生架构师</strong><span>主导腾讯游戏上云自动化交付体系</span></div>
+                </div>
+                <div class="timeline-row">
+                  <div class="timeline-year">2021</div>
+                  <div class="timeline-copy"><strong>InfoQ 编辑推荐 / 极客时间签约讲师</strong><span>限流、云原生、Go 语言课程与工程实践输出</span></div>
+                </div>
+                <div class="timeline-row">
+                  <div class="timeline-year">2020</div>
+                  <div class="timeline-copy"><strong>网易游戏 · 高级后端研发</strong><span>梦幻西游</span></div>
+                </div>
+                <div class="timeline-row">
+                  <div class="timeline-year">2019</div>
+                  <div class="timeline-copy"><strong>YY 语音 · 后端研发</strong><span>基础架构部</span></div>
+                </div>
+              </div>
+              <p class="resume-inline-note">从基础设施、游戏业务到企业 AI 平台，我长期处理的都是复杂系统如何稳定落地。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-03">
+      <div class="slide-index">03 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">字节实践</div>
+              <h2>团队内容榜单第一，AI Agent 工程化已经跑进真实业务现场。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">团队内容榜单第一</div>
+              <div class="meta-chip">内容影响力 &gt; 99%</div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <figure class="page-panel image-card reveal">
+              <img src="./assets/images/intro-byte-top1-focus.jpeg" alt="字节跳动 AI 工程实践第一" />
+              <figcaption>字节跳动 AI 工程实践第一：复杂工程里的真实 AI Agent 落地经验。</figcaption>
+            </figure>
+            <div class="page-panel reveal" style="display: grid; grid-template-rows: 1fr auto; gap: 16px">
+              <figure class="image-card" style="border-radius: 18px; overflow: hidden; min-height: 0">
+                <img src="./assets/images/intro-byte-influence-focus.jpeg" alt="内容影响力超过 99%" />
+                <figcaption>内容影响力超过 99%</figcaption>
+              </figure>
+              <div class="grid-3">
+                <div class="stat-card">
+                  <div class="eyebrow">实践成就</div>
+                  <strong>Top 1%</strong>
+                  <p class="soft">AI Agent 工程化实践验证</p>
+                </div>
+                <div class="stat-card">
+                  <div class="eyebrow">内容榜单</div>
+                  <strong>第一</strong>
+                  <p class="soft">团队内容榜单第一</p>
+                </div>
+                <div class="stat-card">
+                  <div class="eyebrow">影响力</div>
+                  <strong>&gt; 99%</strong>
+                  <p class="soft">内容影响力覆盖率</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-04">
+      <div class="slide-index">04 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">关于我 · 艺术面</div>
+              <h2>工程能力进入创作现场，创作表达反过来要求工具真正能落地。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">影像表达</div>
+              <div class="meta-chip">纪录片创作</div>
+              <div class="meta-chip">AI 辅助创作</div>
+            </div>
+          </div>
+          <div class="grid-3">
+            <figure class="page-panel image-card reveal">
+              <img src="./assets/images/intro-art-portrait.jpeg" alt="陕西省大学生联赛亚军" />
+              <figcaption>长期参与舞台与影像表达训练，让我做展示时更重节奏与现场感。</figcaption>
+            </figure>
+            <figure class="page-panel image-card reveal">
+              <img src="./assets/images/intro-art-moon.jpeg" alt="AI 登月：致敬两代人" />
+              <figcaption>《AI登月：致敬两代人》：技术之外，也要处理人、情感与表达。</figcaption>
+            </figure>
+            <figure class="page-panel image-card reveal">
+              <img src="./assets/images/intro-art-family.jpeg" alt="致爷爷奶奶的礼物" />
+              <figcaption>家族纪录片创作：让我更关注“技术最终如何进入真实生活”。</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark-slide" id="slide-05">
+      <div class="slide-index">05 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row reveal">
+            <div class="eyebrow">问题抛出</div>
+            <h2>AI 会写代码了，为什么企业研发还是焦虑？</h2>
+            <p>今天真正卡住团队的，是复杂系统里的正确性、边界、依赖、状态、回归和长期可维护性。</p>
+          </div>
+          <div class="grid-3">
+            <div class="issue-card reveal">
+              <strong>生成看起来很强</strong>
+              <p>局部代码、脚本、页面、测试都能快速生成，单点体验很爽。</p>
+            </div>
+            <div class="issue-card reveal">
+              <strong>系统协同还是散的</strong>
+              <p>PRD、设计、研发、测试、部署、观测仍然被拆成多条断裂的工具链。</p>
+            </div>
+            <div class="issue-card reveal">
+              <strong>组织并没有被重写</strong>
+              <p>多数团队只是把 AI 叠加到原流程上，流程本身还没有完成结构化重写。</p>
+            </div>
+          </div>
+          <div class="quote-band reveal">
+            <p>AI 会写代码，不等于 AI 已经能接住企业研发系统。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-06">
+      <div class="slide-index">06 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row reveal">
+            <div class="eyebrow">现有路线</div>
+            <h2>从 vibe coding 到 SDD，再到 Harness，大家都在进步，但还没有形成真正的研发底座。</h2>
+          </div>
+          <div class="grid-4">
+            <div class="logic-card reveal">
+              <div class="mini-pill">阶段 1</div>
+              <strong>Vibe Coding</strong>
+              <p>会话式生成很强，胜在快，但上下文一大就容易失控。</p>
+            </div>
+            <div class="logic-card reveal">
+              <div class="mini-pill">阶段 2</div>
+              <strong>SDD / Spec IDE</strong>
+              <p>规约更清楚，输入更稳定，但系统后段仍然是散的。</p>
+            </div>
+            <div class="logic-card reveal">
+              <div class="mini-pill">阶段 3</div>
+              <strong>Harness / Skills</strong>
+              <p>开始复用经验和能力包，但大多数还停留在增强个人效率。</p>
+            </div>
+            <div class="logic-card reveal">
+              <div class="mini-pill">阶段 4</div>
+              <strong>Agent Programmer</strong>
+              <p>自动执行单任务越来越强，但长期治理、状态和资产化仍是短板。</p>
+            </div>
+          </div>
+          <div class="quote-band reveal">
+            <p>今天很多路线是在增强 AI 写代码的能力，但企业真正缺的是一套能接住 AI 的研发结构。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-07">
+      <div class="slide-index">07 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row reveal">
+            <div class="eyebrow">企业痛点</div>
+            <h2>企业真正卡住的，是这六类复杂度始终没有被系统吸收。</h2>
+          </div>
+          <div class="grid-3">
+            <div class="issue-card reveal"><strong>正确性</strong><p>结果能否持续验证，决定它能不能进入生产环境。</p></div>
+            <div class="issue-card reveal"><strong>复杂度理解</strong><p>超过一定规模后，AI 和人都会丢失对整体依赖的把握。</p></div>
+            <div class="issue-card reveal"><strong>依赖与边界</strong><p>服务、模型、SaaS、配置、团队协作边界经常被调用链冲穿。</p></div>
+            <div class="issue-card reveal"><strong>状态与并发</strong><p>异步、长流程、消息、回调、流式交互很难讲清，也很难稳定跑。</p></div>
+            <div class="issue-card reveal"><strong>验证与回归</strong><p>生成之后谁来兜底、谁来回放、谁来复盘，这是生产级问题。</p></div>
+            <div class="issue-card reveal"><strong>资产化协作</strong><p>团队需要可复用、可审计、可迁移的长期资产。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark-slide" id="slide-08">
+      <div class="slide-index">08 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row reveal">
+            <div class="eyebrow">核心判断</div>
+            <h2>把该沉淀成软件的部分沉淀成软件，让 AI 进入清晰、受控、可复用的执行结构。</h2>
+          </div>
+          <div class="grid-3">
+            <div class="logic-card reveal">
+              <strong>软件沉淀</strong>
+              <p>把重复劳动沉淀成 CLI、unit、模板、规则和运行时，持续复用。</p>
+            </div>
+            <div class="logic-card reveal">
+              <strong>上下文缩小</strong>
+              <p>用契约、蓝图、step 边界，把 AI 的工作颗粒度压缩到能稳定完成的范围。</p>
+            </div>
+            <div class="logic-card reveal">
+              <strong>分工明确</strong>
+              <p>人负责顶层结构与决策，AI 负责小规模高价值复杂度，两者都做最擅长的事。</p>
+            </div>
+          </div>
+          <div class="quote-band reveal">
+            <p>真正的生产力来自软件、运行时、资产和流程的持续固化。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-09">
+      <div class="slide-index">09 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row reveal">
+            <div class="eyebrow">S.U.P.E.R 设计哲学</div>
+            <h2>AI 原生系统先把结构做对，再把智能放进去。</h2>
+          </div>
+          <div class="grid-3">
+            <div class="logic-card reveal"><strong>S · Single Purpose</strong><p>每个模块、每个文件、每个 step 只解决一个问题。</p></div>
+            <div class="logic-card reveal"><strong>U · Unidirectional Flow</strong><p>输入 → 处理 → 输出，禁止反向依赖和循环调用。</p></div>
+            <div class="logic-card reveal"><strong>P · Ports over Implementation</strong><p>先定义契约、接口和 Schema，再写实现。</p></div>
+            <div class="logic-card reveal"><strong>E · Environment-Agnostic</strong><p>配置外置、日志标准化、同一份能力能跑在本地和云端。</p></div>
+            <div class="logic-card reveal"><strong>R · Replaceable Parts</strong><p>模型、数据源、前端、推送渠道都应该可替换。</p></div>
+            <div class="logic-card reveal"><strong>一句话理解</strong><p>像搭乐高一样构造系统：职责单一、接口标准、方向明确、环境无关、随时可换。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-10">
+      <div class="slide-index">10 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">系统全景</div>
+              <h2>Zmagine AI 编译系统总览</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">邮件案例完整版</div>
+              <div class="meta-chip">需求 → 蓝图 → 运行 → 交付</div>
+            </div>
+          </div>
+          <div class="page-panel screenshot-panel reveal fit-graphic-stage" style="padding: 10px; min-height: 520px;">
+            <img class="prototype-shot" src="./assets/images/diagram-zmagine-overview-mail.svg" alt="Zmagine AI 编译系统总览（邮件案例完整版）" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-11">
+      <div class="slide-index">11 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">主线案例</div>
+              <h2>主线案例：企业邮件智能回复</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">mail_id → 结构化回复草稿</div>
+              <div class="meta-chip">完整链路</div>
+            </div>
+          </div>
+          <div class="page-panel screenshot-panel reveal fit-graphic-stage" style="padding: 8px;">
+            <img class="prototype-shot" src="./assets/images/diagram-mail-flow-main.svg" alt="企业邮件智能回复完整链路" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-12">
+      <div class="slide-index">12 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">邮件例子</div>
+              <h2>一个邮件需求，会先收成 entry，再展开成一条明确的 flow。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">PRD → entry → flow → steps</div>
+              <div class="meta-chip">邮件回复主线</div>
+            </div>
+          </div>
+          <div class="page-panel screenshot-panel reveal fit-graphic-stage" style="padding: 12px;">
+            <img class="prototype-shot" src="./assets/images/diagram-mail-prd-dag.svg" alt="邮件需求从 PRD 到 flow / step 识别流程图" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-13">
+      <div class="slide-index">13 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">YAML / 注释</div>
+              <h2>执行图会落成一份 entry / flow / steps 蓝图。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">entry / flow / steps</div>
+              <div class="meta-chip">依赖声明 / 数据流转</div>
+            </div>
+          </div>
+          <div class="page-panel reveal" style="padding: 14px;">
+            <div class="yaml-layout">
+              <div class="yaml-stage">
+                <div class="yaml-row top">
+                  <div class="yaml-block">
+                    <div class="yaml-header">entry</div>
+                    <div class="yaml-code">
+                      <div class="yaml-line"><span class="yaml-key">entry</span><span class="yaml-punc">:</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-key">name</span><span class="yaml-punc">:</span> <span class="yaml-value">inbox_reply_entry</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-key">flows</span><span class="yaml-punc">:</span></div>
+                      <div class="yaml-line yaml-indent-2"><span class="yaml-node">customer_reply_flow</span><span class="yaml-punc">:</span></div>
+                      <div class="yaml-line yaml-indent-3"><span class="yaml-key">default</span><span class="yaml-punc">:</span> <span class="yaml-value">true</span></div>
+                    </div>
+                  </div>
+                  <div class="yaml-block">
+                    <div class="yaml-header">flow</div>
+                    <div class="yaml-code">
+                      <div class="yaml-line"><span class="yaml-key">flow</span><span class="yaml-punc">:</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-key">name</span><span class="yaml-punc">:</span> <span class="yaml-value">customer_reply_flow</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-key">parallel_execution</span><span class="yaml-punc">:</span> <span class="yaml-value">false</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="yaml-row bottom">
+                  <div class="yaml-block">
+                    <div class="yaml-header">steps / 1</div>
+                    <div class="yaml-code">
+                      <div class="yaml-line"><span class="yaml-key">steps</span><span class="yaml-punc">:</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-node">open_thread</span><span class="yaml-punc">:</span></div>
+                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">inputs</span><span class="yaml-punc">:</span></div>
+	                      <div class="yaml-line yaml-indent-3"><span class="yaml-key">thread_ref</span><span class="yaml-punc">:</span> <span class="yaml-value">{ from: req::thread_ref }</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">outputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[thread_body, file_handles]</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-node">scan_files</span><span class="yaml-punc">:</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">dependencies</span><span class="yaml-punc">:</span> <span class="yaml-value">[open_thread]</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">outputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[has_files, file_handles]</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-node">stage_files</span><span class="yaml-punc">:</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">dependencies</span><span class="yaml-punc">:</span> <span class="yaml-value">[scan_files]</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">outputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[cached_files]</span></div>
+                    </div>
+                  </div>
+                  <div class="yaml-block">
+                    <div class="yaml-header">steps / 2</div>
+                    <div class="yaml-code">
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-node">digest_files</span><span class="yaml-punc">:</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">dependencies</span><span class="yaml-punc">:</span> <span class="yaml-value">[stage_files]</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">inputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[cached_files]</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">outputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[file_digest]</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-node">compose_reply</span><span class="yaml-punc">:</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">dependencies</span><span class="yaml-punc">:</span> <span class="yaml-value">[open_thread, digest_files]</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">inputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[thread_body, file_digest, review_rules]</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">outputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[reply_draft, review_marks]</span></div>
+                      <div class="yaml-line yaml-indent-1"><span class="yaml-node">package_reply</span><span class="yaml-punc">:</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">dependencies</span><span class="yaml-punc">:</span> <span class="yaml-value">[compose_reply]</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">inputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[reply_draft, review_marks]</span></div>
+	                      <div class="yaml-line yaml-indent-2"><span class="yaml-key">outputs</span><span class="yaml-punc">:</span> <span class="yaml-value">[reply_subject, reply_body, citations]</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="yaml-notes">
+                <div class="yaml-note">
+                  <strong>入口挂载 / 主链</strong>
+                  <p>`entry` 把入口请求挂到 `customer_reply_flow`，`flow` 负责声明这条主链按顺序推进，并把 `parallel_execution = false` 固定下来。</p>
+                </div>
+                <div class="yaml-note">
+                  <strong>step 契约 / 数据流</strong>
+	                  <p>每个 step 都把 `inputs / outputs` 摊平写进蓝图：线程正文、文件摘要、审阅标记和最终回复沿依赖链逐段传递。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-14">
+      <div class="slide-index">14 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">抽象代码样例</div>
+              <h2>unit 只暴露一个最小运行面。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">Unit 接口</div>
+              <div class="meta-chip">无状态 / 可替换 / 易测试</div>
+            </div>
+          </div>
+          <div class="page-panel reveal" style="padding: 14px;">
+            <div class="operator-layout">
+              <div class="code-stage">
+                <div class="eyebrow">抽象代码样例</div>
+                <h3>Unit 消化局部输入，flow 负责推进路径。</h3>
+                <div class="code-card">
+<pre><span class="code-token-comment">// 智能 unit：无状态、可复用的处理单元</span>
+<span class="code-token-keyword">type</span> <span class="code-token-type">Unit</span> interface {
+    Run(ctx context.Context, inputs map[string]any) (map[string]any, error)
+}</pre>
+                </div>
+                <div class="code-card">
+<pre><span class="code-token-comment">// ComposeReplyUnit：把线程正文与文件摘要汇聚成回复草稿</span>
+<span class="code-token-keyword">type</span> <span class="code-token-type">ComposeReplyUnit</span> <span class="code-token-keyword">struct</span>{}
+
+<span class="code-token-keyword">func</span> (u <span class="code-token-type">ComposeReplyUnit</span>) Run(ctx, inputs) (...) {
+    draft := composeReply(thread_body, file_digest)
+    <span class="code-token-keyword">return</span> {"reply_draft": draft, "review_marks": inspect(draft)}, nil
+}</pre>
+                </div>
+              </div>
+              <div class="stack-notes">
+                <div class="stack-note reveal"><strong>unit 很薄</strong><p>`Run()` 只处理当前 step 这一次输入输出，不承接全局调度。</p></div>
+                <div class="stack-note reveal"><strong>step 的输入 / 输出</strong><p><strong>open_thread：</strong><code>req::thread_ref</code> → <code>thread_body</code>、<code>file_handles</code><br /><strong>digest_files：</strong><code>cached_files</code> → <code>file_digest</code><br /><strong>compose_reply：</strong><code>thread_body</code>、<code>file_digest</code>、<code>review_rules</code> → <code>reply_draft</code>、<code>review_marks</code></p></div>
+                <div class="stack-note reveal"><strong>路径与测试更直接</strong><p>调度器依据依赖关系计算 ready step；unit 只看 `inputs`，单测、集成测试和替换都更直接。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-15">
+      <div class="slide-index">15 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">执行示例图</div>
+              <h2>一次邮件执行，会沿着这条路径走完整个关键链路。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">entry → flow → steps</div>
+              <div class="meta-chip">邮件执行主线</div>
+            </div>
+          </div>
+          <div class="page-panel screenshot-panel reveal fit-graphic-stage" style="padding: 10px;">
+            <img class="prototype-shot" src="./assets/images/diagram-mail-execution-example-v2.svg" alt="邮件执行示例图" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-16">
+      <div class="slide-index">16 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">分层对应</div>
+              <h2>把编排层单独抬出来，入口、编排、unit 和运行时就各归其位。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">入口 / 编排 / unit / 数据 / 运行时</div>
+              <div class="meta-chip">分层对应</div>
+            </div>
+          </div>
+          <div class="page-panel reveal" style="padding: 18px;">
+            <div class="mapping-layout">
+              <div class="mapping-column">
+                <h3>常见后端分层</h3>
+                <div class="mapping-card"><strong>Service 入口层</strong><p>承接请求入口、参数校验和路由。</p></div>
+                <div class="mapping-card"><strong>BIZ 业务编排层</strong><p>串联业务流程、依赖顺序和分支策略。</p></div>
+                <div class="mapping-card"><strong>DATA / Gateway / Repository</strong><p>访问数据库、文件、RPC 和外部网关。</p></div>
+                <div class="mapping-card"><strong>Infra / Common</strong><p>承接状态、日志、策略、可观测与通用能力。</p></div>
+              </div>
+              <div class="arrow-column">
+                <div class="arrow-chip">入口承接</div>
+                <div class="arrow-chip">编排承接</div>
+                <div class="arrow-chip">局部动作</div>
+                <div class="arrow-chip">运行治理</div>
+              </div>
+              <div class="mapping-column">
+                <h3>Zmagine / ZFlow 对应</h3>
+                <div class="mapping-card"><strong>Zmagine Entry / Service</strong><p>承接入口、参数与路由，把请求送进结构主线。</p></div>
+                <div class="mapping-card"><strong>ZFlow Flow / Step</strong><p>承接业务编排、依赖关系、分支与执行顺序。</p></div>
+                <div class="mapping-card"><strong>Unit</strong><p>承接局部领域动作，内部调用 Repo / Gateway / RPC。</p></div>
+                <div class="mapping-card"><strong>Binding / State / Policy / Observability</strong><p>承接状态、回放、策略与运行时治理。</p></div>
+              </div>
+              <div class="mapping-summary"><strong>结构拆开之后：</strong>入口、编排、局部动作和运行治理各归其位，迁移和维护时不会再全部挤在同一层里。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-17">
+      <div class="slide-index">17 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">局部上下文与测试</div>
+              <h2>AI 只处理局部任务，流程仍可回放，每个 unit 都能独立验证。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">局部上下文 / unit 测试</div>
+              <div class="meta-chip">回放 / 闸门 / 发布</div>
+            </div>
+          </div>
+          <div class="page-panel reveal" style="padding: 18px;">
+            <div class="evidence-layout">
+              <div class="evidence-card">
+                <strong>① 局部输入</strong>
+                <div class="evidence-list">
+                  <div class="evidence-item"><strong>thread_body</strong><span>线程正文与历史往来摘要</span></div>
+                  <div class="evidence-item"><strong>file_digest[]</strong><span>文件抽取文本与整理后的摘要</span></div>
+                  <div class="evidence-item"><strong>review_rules</strong><span>客户等级、风险标签与人工确认要求</span></div>
+                </div>
+              </div>
+              <div class="evidence-card">
+                <strong>② 每个 unit 都能独立测试</strong>
+                <div class="evidence-list">
+                  <div class="evidence-item"><strong>open_thread</strong><span>unit / contract</span></div>
+                  <div class="evidence-item"><strong>digest_files</strong><span>unit / replay</span></div>
+                  <div class="evidence-item"><strong>compose_reply</strong><span>integration / safety</span></div>
+                  <div class="evidence-item"><strong>package_reply</strong><span>snapshot / schema</span></div>
+                </div>
+              </div>
+              <div class="evidence-card">
+                <strong>③ 可复现流程</strong>
+                <div class="evidence-list">
+                  <div class="evidence-item"><strong>blueprint</strong><span>bp-8f4c31</span></div>
+                  <div class="evidence-item"><strong>replay samples</strong><span>mail-reply-regression-07</span></div>
+                  <div class="evidence-item"><strong>release gate</strong><span>staging → canary → prod</span></div>
+                  <div class="evidence-item"><strong>trace_id</strong><span>REQ-2026-0417-EM-118</span></div>
+                </div>
+              </div>
+              <div class="evidence-strip">
+                <strong>同一条证据链</strong>
+                <div class="evidence-rail">
+                  <div>蓝图版本</div>
+                  <div>样本回放</div>
+                  <div>发布闸门</div>
+                  <div>放量记录</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-18">
+      <div class="slide-index">18 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">平台落点</div>
+              <h2>平台把录入、追踪、放量和回放收进同一块工作台。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">关键工作台截面</div>
+              <div class="meta-chip">录入 / 追踪 / 放量 / 回放</div>
+            </div>
+          </div>
+          <div class="grid-2" style="grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr); align-items: stretch;">
+            <div class="page-panel screenshot-panel reveal">
+              <img class="prototype-shot" src="./assets/images/prototype-overview.png" alt="Zmagine 平台工作台截图" />
+            </div>
+            <div class="page-panel reveal">
+              <div class="bullet-stack">
+                <div class="bullet"><div class="bullet-marker">1</div><div><strong>录入：</strong>需求进入平台，但不再以聊天记录的形式继续漂移。</div></div>
+                <div class="bullet"><div class="bullet-marker">2</div><div><strong>追踪：</strong>蓝图、测试、发布和运行状态在同一张工作台上连起来。</div></div>
+                <div class="bullet"><div class="bullet-marker">3</div><div><strong>放量：</strong>灰度、金丝雀和回滚只呈现必要控制面。</div></div>
+                <div class="bullet"><div class="bullet-marker">4</div><div><strong>回放：</strong>问题定位回到证据链，不回到“重新猜一遍 Prompt”。</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide dark-slide" id="slide-19">
+      <div class="slide-index">19 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">底座必要性</div>
+              <h2>为什么中间必须有一层 ZFlow？</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">正交 / 局部性 / 契约 / 可运行</div>
+              <div class="meta-chip">复杂度吸收层</div>
+            </div>
+          </div>
+          <div class="page-panel screenshot-panel reveal fit-graphic-stage" style="padding: 10px; min-height: 520px;">
+            <div class="screenshot-panel fit-graphic-stage" style="padding: 0; min-height: 0; height: 100%; overflow: hidden;">
+              <img class="prototype-shot" src="./assets/images/diagram-zflow-principles.svg" alt="ZFlow 底座必要性原则图" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-20">
+      <div class="slide-index">20 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">定位对比 A</div>
+              <h2>现有路线正在往“结构时代”迁移，但所处层次并不相同。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">定位图</div>
+              <div class="meta-chip">自动执行 vs 结构承载</div>
+            </div>
+          </div>
+          <div class="page-panel screenshot-panel reveal fit-graphic-stage" style="padding: 0; min-height: 520px;">
+            <img class="prototype-shot" src="./assets/images/diagram-ai-landscape.svg" alt="AI 编程路线结构迁移定位图" />
+          </div>
+          <div class="grid-3">
+            <div class="logic-card reveal"><strong>Skill / Spec Kit</strong><p>更偏增强 AI 的技能与表达能力，重点在局部任务组织。</p></div>
+            <div class="logic-card reveal"><strong>Agent Programmer</strong><p>自动执行越来越强，但长期治理和团队资产沉淀仍然是难点。</p></div>
+            <div class="logic-card reveal"><strong>结构底座路线</strong><p>真正开始碰系统级结构、全流程联动和企业级治理闭环。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-21">
+      <div class="slide-index">21 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row reveal">
+            <div class="eyebrow">定位对比 B</div>
+            <h2>为什么 Archon 值得作为开源路标？</h2>
+            <p>它证明了结构层正在成为开源世界的新焦点，单体 prompt 和单体 coding agent 已经不够覆盖整条研发系统。</p>
+            <div class="headline-meta">
+              <div class="meta-chip">GitHub 18.5k stars</div>
+              <div class="meta-chip">workflow engine for AI coding agents</div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="archon-card reveal">
+              <div class="eyebrow">Archon 的 YAML 在编排研发活动</div>
+              <p class="soft">Archon 是一个面向 AI coding agents 的工作流引擎，用结构化流程承接计划、实现、审批与反复迭代。</p>
+              <div class="archon-code yaml-lines">
+                <code>steps:
+  - id: plan
+    prompt: "先分析代码并输出计划"
+
+  - id: implement
+    depends_on: [plan]
+    loop:
+      prompt: "实现下一步并运行校验"
+      until: ALL_TASKS_COMPLETE
+
+  - id: approve
+    depends_on: [implement]
+    loop:
+      prompt: "展示结果并等待人工审批"
+      until: APPROVED</code>
+              </div>
+              <p class="soft">它证明了结构层已经成为开源社区从工具走向系统的关键一步。</p>
+            </div>
+            <div class="page-panel reveal">
+              <div class="grid-3">
+                <div class="logic-card"><strong>Archon 证明了什么</strong><p>研发流程的结构组织，本身就是一个独立问题。</p></div>
+                <div class="logic-card"><strong>两者的关系</strong><p>两者指向同一方向，但关注层次和承接范围不同。</p></div>
+                <div class="logic-card"><strong>Zmagine 更强调什么</strong><p>PRD 到部署的全流程范式、编译控制层、运行治理与 GitOps 一体化。</p></div>
+              </div>
+              <div class="quote-band">
+                <p>Archon 是一个重要的开源路标，而 Zmagine 想走的是更完整的 AI 原生研发系统路线。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-22">
+      <div class="slide-index">22 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row reveal">
+            <div class="eyebrow">边界与真实难点</div>
+            <h2>真正难的地方，集中在迁移、治理和持续运行。</h2>
+          </div>
+          <div class="grid-2">
+            <div class="page-panel reveal">
+              <div class="bullet-stack">
+                <div class="bullet"><div class="bullet-marker">1</div><div><strong>认知成本高：</strong>抽象设计、编排思维、运行治理都需要工程经验。</div></div>
+                <div class="bullet"><div class="bullet-marker">2</div><div><strong>迁移有代价：</strong>通常需要不兼容隔离、灰度和双轨切换。</div></div>
+                <div class="bullet"><div class="bullet-marker">3</div><div><strong>持续运行型任务更难：</strong>并发、异步、长流程和状态语义仍然需要持续演进。</div></div>
+              </div>
+            </div>
+            <div class="page-panel reveal">
+              <div class="bullet-stack">
+                <div class="bullet"><div class="bullet-marker">4</div><div><strong>安全与合规不可跳过：</strong>越是自动化，越要重视审计、追踪和边界。</div></div>
+                <div class="bullet"><div class="bullet-marker">5</div><div><strong>这也正是价值所在：</strong>因为它试图吃掉的，恰恰是企业研发里真正难的问题。</div></div>
+              </div>
+              <div class="quote-band">
+                <p>边界说得越清楚，系统就越接近真实生产环境。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark-slide" id="slide-23">
+      <div class="slide-index">23 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">引擎模块与开发路径</div>
+              <h2>Zmagine / ZFlow 的开发，要同时处理编排、运行时、性能与模型策略。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">引擎模块</div>
+              <div class="meta-chip">模型与商业路径</div>
+            </div>
+          </div>
+          <div class="grid-2" style="gap: 14px;">
+            <div class="page-panel reveal">
+              <div class="eyebrow">ZFlow 核心模块</div>
+              <div class="grid-2" style="gap: 14px;">
+                <div class="logic-card reveal"><strong>编排与规划</strong><p>Parser、Planner、flow 数据结构、QoS 校验，负责把蓝图编译成可执行计划。</p></div>
+                <div class="logic-card reveal"><strong>调度与运行时</strong><p>Scheduler、Executor、Binding、State、ControlRoute，把依赖关系推进成真实执行路径。</p></div>
+                <div class="logic-card reveal"><strong>策略与质量</strong><p>Retry、Timeout、Policy、QoS、Branch Control，保证 step 失败、分支和服务质量可治理。</p></div>
+                <div class="logic-card reveal"><strong>性能与观测</strong><p>Plan 缓存、StructBind、并发执行、Trace / Observability，让引擎既能跑得快，也能回放和排障。</p></div>
+              </div>
+            </div>
+            <div class="page-panel reveal">
+              <div class="eyebrow">开发时要考虑的环节</div>
+              <div class="bullet-stack">
+                <div class="bullet"><div class="bullet-marker">1</div><div><strong>前沿模型辅助引擎开发：</strong>用 Claude Code 与 Opus 4.6 级别前沿模型处理接口设计、运行时抽象、调度与性能细节。</div></div>
+                <div class="bullet"><div class="bullet-marker">2</div><div><strong>业务 unit 逐步迁移：</strong>做业务流、研发流、AI flow YAML 和 unit 开发时，约束一旦稳定，就可以逐步迁到高性价比国产开源模型。</div></div>
+                <div class="bullet"><div class="bullet-marker">3</div><div><strong>开发不只写功能：</strong>还要同时考虑状态、并发、重试、回放、审计、trace、发布闸门和后续迁移成本。</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid-3" style="gap: 14px;">
+            <div class="business-card reveal" style="padding: 14px; gap: 8px;"><strong>模型分层</strong><p>高难抽象阶段用最强模型，稳定 unit 逐步切向高性价比模型。</p></div>
+            <div class="business-card reveal" style="padding: 14px; gap: 8px;"><strong>开闭源协同</strong><p>底座、unit 资产、业务模板和平台能力可分层开放。</p></div>
+            <div class="business-card reveal" style="padding: 14px; gap: 8px;"><strong>商业化路径</strong><p>引擎、平台、企业定制与托管运行仍在持续验证。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark-slide" id="slide-24">
+      <div class="slide-index">24 / 25</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">展望</div>
+              <h2>下一步，是把这套结构继续推向开源、长流程和更广的产业场景。</h2>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">2025.07</div>
+              <div class="meta-chip">ZFlow 开源</div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="page-panel reveal">
+              <div class="eyebrow">关键时间点</div>
+              <div class="bullet-stack">
+                <div class="bullet"><div class="bullet-marker">1</div><div><strong>2025 年 7 月：</strong>ZFlow 引擎计划启动开源，先开放核心编排、调度、运行时与基础 unit 能力。</div></div>
+                <div class="bullet"><div class="bullet-marker">2</div><div><strong>下一阶段：</strong>继续补全 Unit 开发体验、回放链路、观测能力与平台侧集成。</div></div>
+                <div class="bullet"><div class="bullet-marker">3</div><div><strong>更远一步：</strong>扩展到更长异步流程、更多行业场景和组织级资产化路径。</div></div>
+              </div>
+            </div>
+            <div class="page-panel reveal">
+              <div class="eyebrow">开放方向</div>
+              <div class="grid-3" style="grid-template-columns: 1fr; gap: 12px;">
+                <div class="logic-card"><strong>开源底座</strong><p>开放引擎核心，降低结构化编排和运行时治理的接入门槛。</p></div>
+                <div class="logic-card"><strong>平台延伸</strong><p>平台继续承接 PRD、测试、发布、回放和多环境运行治理。</p></div>
+                <div class="logic-card"><strong>模型协同</strong><p>前沿模型承担高难抽象，稳定 unit 逐步迁向更高性价比模型。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark-slide" id="slide-25">
+      <div class="slide-index">25 / 25</div>
+      <div class="slide-content">
+        <div class="closing-shell">
+          <div class="closing-panel dark reveal">
+            <div class="eyebrow">结尾判断</div>
+            <h2>带走的，是一种新的研发组织方式。</h2>
+            <div class="quote-list">
+              <div class="quote-item">
+                <strong>01</strong>
+                <p>AI 手替会越来越强，生产系统决定最终上限。</p>
+              </div>
+              <div class="quote-item">
+                <strong>02</strong>
+                <p>真正的壁垒来自约束、编排、验证和资产化。</p>
+              </div>
+              <div class="quote-item">
+                <strong>03</strong>
+                <p>Zmagine 代表从 PRD 到部署的 AI 原生研发范式。</p>
+              </div>
+            </div>
+          </div>
+          <div class="closing-panel dark reveal">
+            <div class="eyebrow">分享收束</div>
+            <h3>软件工程的竞争，会越来越集中在谁能把复杂系统编译成可持续运行的生产结构。</h3>
+            <p class="soft">
+              这条路线还会继续延伸到更长异步流程、更多行业场景和组织级资产化路径。
+            </p>
+            <div class="agenda-card" style="padding: 0; background: none; border: 0">
+              <div class="agenda-item">
+                <div class="agenda-no">Q</div>
+                <div>
+                  <strong>欢迎追问</strong>
+                  <p class="soft">异步 / 流式 / 灰度迁移 / 开闭源模型 / 商业模式</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">Zmagine Shenzhen Talk · 2026</div>
+    </section>
+
+    <section class="slide" id="slide-26">
+      <div class="slide-index">26 / 26</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">附录 · GitOps 云原生部署</div>
+              <h2>项目组自维护的 GitOps 全局形态</h2>
+              <p>代码仓和部署仓分层协同，项目组围绕 Git 证据链自维护研发、发布、回滚与环境变更。</p>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">2024</div>
+              <div class="meta-chip">我在腾讯游戏上云范式设计与落地</div>
+            </div>
+          </div>
+          <div class="page-panel screenshot-panel reveal fit-graphic-stage" style="padding: 6px; min-height: 540px;">
+            <img class="prototype-shot" src="./assets/images/projectGitops.png" alt="项目组自维护的 GitOps 全局形态" />
+          </div>
+          <div class="quote-band reveal" style="padding: 14px 18px;">
+            <p style="font-size: 22px;">代码仓与部署仓分层协同，项目组可以围绕 Git 证据链自维护研发、发布、回滚与环境变更。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-27">
+      <div class="slide-index">27 / 27</div>
+      <div class="slide-content">
+        <div class="page-shell">
+          <div class="headline-row compact">
+            <div class="reveal">
+              <div class="eyebrow">附录 · GitOps 云原生部署</div>
+              <h2>基于 ArgoCD 的大规模应用管理</h2>
+              <p>基于 AppSet、模板和 values，ArgoCD 可以把多环境、多应用、多集群的发布关系收进统一控制面。</p>
+            </div>
+            <div class="headline-meta reveal">
+              <div class="meta-chip">2024</div>
+              <div class="meta-chip">我在腾讯游戏上云范式设计与落地</div>
+            </div>
+          </div>
+          <div class="page-panel screenshot-panel reveal fit-graphic-stage" style="padding: 6px; min-height: 540px;">
+            <img class="prototype-shot" src="./assets/images/gitops-detail-redacted.png" alt="基于 ArgoCD 的 GitOps 大规模应用管理" />
+          </div>
+          <div class="quote-band reveal" style="padding: 14px 18px;">
+            <p style="font-size: 22px;">基于 AppSet、模板和 values，ArgoCD 可以把多环境、多应用、多集群的发布关系收进统一控制面。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide event-brand-slide" id="slide-28">
+      <div class="slide-index">28 / 28</div>
+      <div class="slide-content">
+        <div class="thanks-shell">
+          <div class="thanks-card reveal">
+            <div class="thanks-copy">
+              <div class="eyebrow">交流与联系</div>
+              <h2>Thanks</h2>
+              <p>AIGC 欢迎技术交流</p>
+            </div>
+            <div class="thanks-qr-card">
+              <img src="./assets/images/wechat-qr-caco.png" alt="微信二维码" />
+              <div class="thanks-qr-note">微信扫码添加，AIGC 欢迎技术交流</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">腾讯云架构师技术同盟 · Shenzhen 2026</div>
+    </section>
+
+    <script>
+      class SlidePresentation {
+        constructor() {
+          this.slides = [...document.querySelectorAll(".slide")];
+          this.progressBar = document.getElementById("progressBar");
+          this.navDots = document.getElementById("navDots");
+          this.currentSlide = 0;
+          this.locked = false;
+          this.startY = 0;
+          this.prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches;
+          this.buildNav();
+          this.syncIndices();
+          this.observeSlides();
+          this.bindHash();
+          this.bindKeys();
+          this.bindWheel();
+          this.bindTouch();
+          this.ensureInitialSlide();
+          this.updateUI();
+        }
+
+        syncIndices() {
+          const total = String(this.slides.length).padStart(2, "0");
+          this.slides.forEach((slide, index) => {
+            const label = slide.querySelector(".slide-index");
+            if (label) {
+              label.textContent = `${String(index + 1).padStart(2, "0")} / ${total}`;
+            }
+          });
+        }
+
+        buildNav() {
+          this.navDots.innerHTML = "";
+          this.slides.forEach((_, index) => {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.setAttribute("aria-label", `跳转到第 ${index + 1} 页`);
+            dot.addEventListener("click", () => this.goTo(index));
+            this.navDots.appendChild(dot);
+          });
+          this.updateUI();
+        }
+
+        observeSlides() {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("visible");
+                const index = this.slides.indexOf(entry.target);
+                if (index >= 0) {
+                  this.currentSlide = index;
+                  if (entry.target.id) {
+                    history.replaceState(null, "", `#${entry.target.id}`);
+                  }
+                  this.updateUI();
+                }
+              });
+            },
+            { threshold: 0.58 }
+          );
+
+          this.slides.forEach((slide) => observer.observe(slide));
+        }
+
+        bindHash() {
+          window.addEventListener("hashchange", () => this.goToHash(true));
+        }
+
+        ensureInitialSlide() {
+          if (this.goToHash(false)) return;
+          const first = this.slides[0];
+          if (!first) return;
+          first.classList.add("visible");
+          this.currentSlide = 0;
+        }
+
+        goToHash(smooth) {
+          const targetId = window.location.hash.replace(/^#/, "");
+          if (!targetId) return false;
+          const slide = document.getElementById(targetId);
+          if (!slide) return false;
+          const index = this.slides.indexOf(slide);
+          slide.classList.add("visible");
+          if (index >= 0) {
+            this.currentSlide = index;
+            this.updateUI();
+          }
+          slide.scrollIntoView({
+            behavior: smooth && !this.prefersReducedMotion ? "smooth" : "auto",
+            block: "start",
+          });
+          return true;
+        }
+
+        bindKeys() {
+          window.addEventListener("keydown", (event) => {
+            const key = event.key;
+            if (["ArrowDown", "PageDown", " ", "ArrowRight"].includes(key)) {
+              event.preventDefault();
+              this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+            }
+            if (["ArrowUp", "PageUp", "ArrowLeft"].includes(key)) {
+              event.preventDefault();
+              this.goTo(Math.max(this.currentSlide - 1, 0));
+            }
+            if (key === "Home") {
+              event.preventDefault();
+              this.goTo(0);
+            }
+            if (key === "End") {
+              event.preventDefault();
+              this.goTo(this.slides.length - 1);
+            }
+          });
+        }
+
+        bindWheel() {
+          window.addEventListener(
+            "wheel",
+            (event) => {
+              if (this.locked || Math.abs(event.deltaY) < 28) return;
+              event.preventDefault();
+              this.locked = true;
+              const next =
+                event.deltaY > 0
+                  ? Math.min(this.currentSlide + 1, this.slides.length - 1)
+                  : Math.max(this.currentSlide - 1, 0);
+              this.goTo(next);
+              window.setTimeout(() => {
+                this.locked = false;
+              }, 650);
+            },
+            { passive: false }
+          );
+        }
+
+        bindTouch() {
+          window.addEventListener(
+            "touchstart",
+            (event) => {
+              this.startY = event.changedTouches[0].clientY;
+            },
+            { passive: true }
+          );
+          window.addEventListener(
+            "touchend",
+            (event) => {
+              const delta = this.startY - event.changedTouches[0].clientY;
+              if (Math.abs(delta) < 60) return;
+              this.goTo(
+                delta > 0
+                  ? Math.min(this.currentSlide + 1, this.slides.length - 1)
+                  : Math.max(this.currentSlide - 1, 0)
+              );
+            },
+            { passive: true }
+          );
+        }
+
+        goTo(index) {
+          const slide = this.slides[index];
+          if (!slide) return;
+          this.currentSlide = index;
+          slide.classList.add("visible");
+          if (slide.id) {
+            history.replaceState(null, "", `#${slide.id}`);
+          }
+          slide.scrollIntoView({
+            behavior: this.prefersReducedMotion ? "auto" : "smooth",
+            block: "start",
+          });
+          this.updateUI();
+        }
+
+        updateUI() {
+          [...this.navDots.children].forEach((dot, index) => {
+            dot.classList.toggle("active", index === this.currentSlide);
+          });
+          const ratio = ((this.currentSlide + 1) / this.slides.length) * 100;
+          this.progressBar.style.width = `${ratio}%`;
+        }
+      }
+
+      new SlidePresentation();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" rx="40" fill="#FBFAF7"/>
+  <rect x="80" y="100" width="1440" height="700" rx="32" fill="white" stroke="#E5E1D8"/>
+  <text x="120" y="165" fill="#242424" font-size="44" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Zmagine AI 原生编译系统全景</text>
+  <text x="120" y="205" fill="#8B857A" font-size="20" font-family="Arial, PingFang SC, sans-serif">从需求输入，到编译、执行、验证、发布和运行治理的一条连续生产线</text>
+
+  <g>
+    <rect x="120" y="260" width="1080" height="90" rx="24" fill="#F6F3EE" stroke="#E5E1D8"/>
+    <rect x="120" y="370" width="1080" height="90" rx="24" fill="#F6F3EE" stroke="#E5E1D8"/>
+    <rect x="120" y="480" width="1080" height="90" rx="24" fill="#F6F3EE" stroke="#E5E1D8"/>
+    <rect x="120" y="590" width="1080" height="90" rx="24" fill="#F6F3EE" stroke="#E5E1D8"/>
+    <rect x="120" y="700" width="1080" height="70" rx="24" fill="#171717"/>
+
+    <rect x="140" y="280" width="155" height="50" rx="18" fill="#E8F3EF"/>
+    <text x="162" y="312" fill="#2CA389" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">01 意图层</text>
+    <text x="330" y="312" fill="#242424" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">需求输入层</text>
+    <text x="520" y="312" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">PRD、流程目标、业务规则、验收条件、企业约束</text>
+
+    <rect x="140" y="390" width="155" height="50" rx="18" fill="#EBF4FA"/>
+    <text x="162" y="422" fill="#2F8DC5" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">02 编译层</text>
+    <text x="330" y="422" fill="#242424" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">结构化规格与蓝图层</text>
+    <text x="620" y="422" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">Spec、节点拆分、Step Contract、.zflow、测试基线</text>
+
+    <rect x="140" y="500" width="155" height="50" rx="18" fill="#F5F1E8"/>
+    <text x="162" y="532" fill="#CC8D37" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">03 执行层</text>
+    <text x="330" y="532" fill="#242424" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">多 Agent 研发执行层</text>
+    <text x="590" y="532" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">任务拆解、实现、测试、修复、发布准备、人机协同</text>
+
+    <rect x="140" y="610" width="155" height="50" rx="18" fill="#E8F3EF"/>
+    <text x="162" y="642" fill="#2CA389" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">04 交付层</text>
+    <text x="330" y="642" fill="#242424" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">验证、发布与运行治理层</text>
+    <text x="620" y="642" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">TDD、回放、灰度、GitOps、追踪、指标、告警、回滚</text>
+
+    <text x="160" y="744" fill="white" font-size="28" font-weight="700" font-family="Arial, PingFang SC, sans-serif">ZFlow 编译 / 运行底座</text>
+    <text x="510" y="744" fill="#D4D1CA" font-size="20" font-family="Arial, PingFang SC, sans-serif">契约、编排、调度、状态、策略、可观测统一承接</text>
+  </g>
+
+  <g>
+    <rect x="1240" y="260" width="220" height="160" rx="28" fill="#F7FAFC" stroke="#D8E9F4"/>
+    <text x="1270" y="305" fill="#2F8DC5" font-size="20" font-weight="700" font-family="Arial, PingFang SC, sans-serif">模型分层</text>
+    <text x="1270" y="345" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">轻任务 → 本地模型</text>
+    <text x="1270" y="378" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">核心决策 → 强模型</text>
+
+    <rect x="1240" y="450" width="220" height="160" rx="28" fill="#F5FBF8" stroke="#D7EDE5"/>
+    <text x="1270" y="495" fill="#2CA389" font-size="20" font-weight="700" font-family="Arial, PingFang SC, sans-serif">GitOps 资产闭环</text>
+    <text x="1270" y="535" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">需求 / 蓝图 / 发布</text>
+    <text x="1270" y="568" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">版本化、回放、审计</text>
+  </g>
+
+  <path d="M1200 305H1240" stroke="#C9C3B8" stroke-width="3" stroke-dasharray="8 8"/>
+  <path d="M1200 495H1240" stroke="#C9C3B8" stroke-width="3" stroke-dasharray="8 8"/>
+</svg>

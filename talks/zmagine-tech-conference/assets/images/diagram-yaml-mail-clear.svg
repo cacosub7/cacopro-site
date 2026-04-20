@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FAFCFF"/>
+      <stop offset="1" stop-color="#F3F8F7"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#111111" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .tag{font:700 16px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#20B7A7}
+      .section{font:700 24px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#122033}
+      .body{font:600 18px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#304155}
+      .small{font:500 16px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#5E728A}
+      .code{font:600 24px 'SFMono-Regular','Menlo','Consolas',monospace}
+      .codeSm{font:600 22px 'SFMono-Regular','Menlo','Consolas',monospace}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="36" fill="url(#bg)"/>
+
+  <rect x="34" y="36" width="1028" height="220" rx="28" fill="#141B22" stroke="#2A3847" filter="url(#shadow)"/>
+  <text x="70" y="78" class="tag">handler / dag</text>
+
+  <text x="70" y="128" class="code" fill="#F4D37E">handler</text><text x="194" y="128" class="code" fill="#F8FAFD">:</text>
+  <text x="118" y="168" class="codeSm" fill="#F8FAFD">name</text><text x="204" y="168" class="codeSm" fill="#F8FAFD">:</text><text x="246" y="168" class="codeSm" fill="#7EE0A7"> enterprise_mail_reply</text>
+  <text x="118" y="206" class="codeSm" fill="#F8FAFD">dags</text><text x="204" y="206" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="168" y="244" class="codeSm" fill="#7EE0A7">mail_reply_main</text><text x="402" y="244" class="codeSm" fill="#F8FAFD">:</text><text x="446" y="244" class="codeSm" fill="#F8FAFD">default</text><text x="570" y="244" class="codeSm" fill="#F8FAFD">:</text><text x="614" y="244" class="codeSm" fill="#7AD7FF"> true</text>
+
+  <text x="720" y="128" class="code" fill="#F4D37E">dag</text><text x="806" y="128" class="code" fill="#F8FAFD">:</text>
+  <text x="768" y="168" class="codeSm" fill="#F8FAFD">name</text><text x="854" y="168" class="codeSm" fill="#F8FAFD">:</text><text x="896" y="168" class="codeSm" fill="#7EE0A7"> mail_reply_main</text>
+  <text x="768" y="206" class="codeSm" fill="#F8FAFD">parallel_execution</text><text x="1086" y="206" class="codeSm" fill="#F8FAFD">:</text><text x="1130" y="206" class="codeSm" fill="#7AD7FF"> false</text>
+
+  <rect x="34" y="288" width="1028" height="578" rx="28" fill="#141B22" stroke="#2A3847" filter="url(#shadow)"/>
+  <text x="70" y="330" class="tag">nodes</text>
+  <text x="70" y="380" class="code" fill="#F4D37E">nodes</text><text x="164" y="380" class="code" fill="#F8FAFD">:</text>
+
+  <text x="70" y="432" class="codeSm" fill="#7EE0A7">load_mail</text><text x="224" y="432" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="120" y="468" class="codeSm" fill="#F8FAFD">inputs</text><text x="214" y="468" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="170" y="504" class="codeSm" fill="#F8FAFD">mail_id</text><text x="270" y="504" class="codeSm" fill="#F8FAFD">:</text><text x="312" y="504" class="codeSm" fill="#7AD7FF"> req::mail_id</text>
+
+  <text x="70" y="572" class="codeSm" fill="#7EE0A7">inspect_attachments</text><text x="362" y="572" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="120" y="608" class="codeSm" fill="#F8FAFD">dependencies</text><text x="286" y="608" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="170" y="644" class="codeSm" fill="#7AD7FF">- load_mail</text>
+
+  <text x="70" y="712" class="codeSm" fill="#7EE0A7">download_attachments</text><text x="384" y="712" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="120" y="748" class="codeSm" fill="#F8FAFD">dependencies</text><text x="286" y="748" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="170" y="784" class="codeSm" fill="#7AD7FF">- inspect_attachments</text>
+
+  <text x="560" y="432" class="codeSm" fill="#7EE0A7">extract_attachment_text</text><text x="924" y="432" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="610" y="468" class="codeSm" fill="#F8FAFD">dependencies</text><text x="776" y="468" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="660" y="504" class="codeSm" fill="#7AD7FF">- download_attachments</text>
+
+  <text x="560" y="572" class="codeSm" fill="#7EE0A7">draft_reply</text><text x="744" y="572" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="610" y="608" class="codeSm" fill="#F8FAFD">dependencies</text><text x="776" y="608" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="660" y="644" class="codeSm" fill="#7AD7FF">- load_mail</text>
+  <text x="660" y="680" class="codeSm" fill="#7AD7FF">- extract_attachment_text</text>
+
+  <text x="560" y="748" class="codeSm" fill="#7EE0A7">format_response</text><text x="802" y="748" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="610" y="784" class="codeSm" fill="#F8FAFD">dependencies</text><text x="776" y="784" class="codeSm" fill="#F8FAFD">:</text>
+  <text x="660" y="820" class="codeSm" fill="#7AD7FF">- draft_reply</text>
+
+  <rect x="1092" y="36" width="474" height="830" rx="28" fill="#FFFFFF" stroke="#D9E4EC" filter="url(#shadow)"/>
+  <text x="1128" y="88" class="section">结构解释</text>
+
+  <rect x="1128" y="126" width="402" height="154" rx="20" fill="#F2F7FB"/>
+  <text x="1156" y="168" class="body">① handler / dag</text>
+  <text x="1156" y="200" class="small">handler 负责把请求路由到 mail_reply_main。</text>
+  <text x="1156" y="228" class="small">dag 固定主线的执行顺序，并明确</text>
+  <text x="1156" y="256" class="small">parallel_execution = false。</text>
+
+  <rect x="1128" y="306" width="402" height="224" rx="20" fill="#F2F7FB"/>
+  <text x="1156" y="348" class="body">② nodes</text>
+  <text x="1156" y="380" class="small">load_mail 提供正文和附件引用。</text>
+  <text x="1156" y="408" class="small">inspect_attachments / download_attachments /</text>
+  <text x="1156" y="436" class="small">extract_attachment_text 处理附件支路。</text>
+  <text x="1156" y="464" class="small">draft_reply 汇聚正文和附件文本。</text>
+  <text x="1156" y="492" class="small">format_response 收束成最终结构化输出。</text>
+
+  <rect x="1128" y="556" width="402" height="250" rx="20" fill="#F2F7FB"/>
+  <text x="1156" y="598" class="body">③ 为什么这样更清楚</text>
+  <text x="1156" y="630" class="small">节点名和依赖关系都在结构里。</text>
+  <text x="1156" y="658" class="small">长依赖用逐行列表展开，投屏也能读清。</text>
+  <text x="1156" y="686" class="small">运行时再叠加 QoS、回放、trace 与发布闸门。</text>
+  <text x="1156" y="714" class="small">编排结构保持稳定，执行能力单独演进。</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" rx="40" fill="#FBFAF7"/>
+  <text x="120" y="150" fill="#242424" font-size="44" font-weight="700" font-family="Arial, PingFang SC, sans-serif">传统后端分层 vs 编译式结构承接</text>
+  <text x="120" y="192" fill="#8B857A" font-size="20" font-family="Arial, PingFang SC, sans-serif">它不是替代所有层，而是把原本塞在大 BIZ Service 里的复杂业务编排逻辑抽出来</text>
+
+  <rect x="130" y="260" width="600" height="520" rx="28" fill="#FFFFFF" stroke="#E5E1D8"/>
+  <rect x="870" y="260" width="600" height="520" rx="28" fill="#FFFFFF" stroke="#E5E1D8"/>
+  <text x="180" y="320" fill="#C0544A" font-size="28" font-weight="700" font-family="Arial, PingFang SC, sans-serif">传统后端分层</text>
+  <text x="920" y="320" fill="#2CA389" font-size="28" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Zmagine / ZFlow 承接</text>
+
+  <g>
+    <rect x="190" y="370" width="480" height="64" rx="18" fill="#F6F3EE" stroke="#E5E1D8"/>
+    <rect x="190" y="450" width="480" height="170" rx="18" fill="#FCEFED" stroke="#E6C6C1"/>
+    <rect x="190" y="636" width="480" height="64" rx="18" fill="#F6F3EE" stroke="#E5E1D8"/>
+    <text x="220" y="410" fill="#242424" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Controller / Handler</text>
+    <text x="220" y="500" fill="#C0544A" font-size="26" font-weight="700" font-family="Arial, PingFang SC, sans-serif">巨大 BIZ Service</text>
+    <text x="220" y="540" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">业务编排、状态、超时、重试、日志、监控</text>
+    <text x="220" y="575" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">大量横切逻辑和外部依赖混在一起</text>
+    <text x="220" y="676" fill="#242424" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Gateway / Repo / RPC</text>
+  </g>
+
+  <g>
+    <rect x="930" y="370" width="480" height="64" rx="18" fill="#F6F3EE" stroke="#E5E1D8"/>
+    <rect x="930" y="450" width="480" height="86" rx="18" fill="#EBF4FA" stroke="#D8E9F4"/>
+    <rect x="930" y="548" width="480" height="86" rx="18" fill="#F5FBF8" stroke="#D7EDE5"/>
+    <rect x="930" y="646" width="480" height="64" rx="18" fill="#F6F3EE" stroke="#E5E1D8"/>
+    <text x="960" y="410" fill="#242424" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Handler / Entry Contract</text>
+    <text x="960" y="503" fill="#2F8DC5" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Blueprint / DAG</text>
+    <text x="960" y="611" fill="#2CA389" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Operator + Policy + Runtime</text>
+    <text x="960" y="686" fill="#242424" font-size="24" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Gateway / Repo / RPC</text>
+  </g>
+
+  <path d="M730 540H870" stroke="#C9C3B8" stroke-width="4" stroke-dasharray="10 10"/>
+  <text x="760" y="520" fill="#8B857A" font-size="18" font-family="Arial, PingFang SC, sans-serif">把编排逻辑抽离为显式结构</text>
+</svg>

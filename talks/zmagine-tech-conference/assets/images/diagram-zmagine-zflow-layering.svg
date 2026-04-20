@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F7F4"/>
+      <stop offset="1" stop-color="#F2EEE8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#111111" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M0 0L12 6L0 12Z" fill="#B5AEA1"/>
+    </marker>
+    <style>
+      .title{font:700 42px Arial,'PingFang SC',sans-serif;fill:#242424}
+      .sub{font:20px Arial,'PingFang SC',sans-serif;fill:#857F75}
+      .section{font:700 22px Arial,'PingFang SC',sans-serif;fill:#242424}
+      .body{font:18px Arial,'PingFang SC',sans-serif;fill:#5F5A52}
+      .small{font:16px Arial,'PingFang SC',sans-serif;fill:#7A756D}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <text x="100" y="118" font-family="Arial,'PingFang SC',sans-serif" font-size="18" font-weight="700" fill="#2CA389">分层对应</text>
+  <text x="100" y="170" class="title">把编排层单独抬出来，入口、编排、算子和运行时就各归其位。</text>
+  <text x="100" y="205" class="sub">Handler 承接入口，DAG 承接编排，Operator 承接局部动作，运行时承接状态与治理。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="110" y="280" width="520" height="470" rx="30" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="144" y="334" class="section">常见后端分层</text>
+    <rect x="144" y="372" width="452" height="72" rx="18" fill="#F7F3EC"/><text x="176" y="416" class="body">Service 入口层</text>
+    <rect x="144" y="468" width="452" height="72" rx="18" fill="#F7F3EC"/><text x="176" y="512" class="body">BIZ 业务编排层</text>
+    <rect x="144" y="564" width="452" height="72" rx="18" fill="#F7F3EC"/><text x="176" y="608" class="body">DATA / Gateway / Repository</text>
+    <rect x="144" y="660" width="452" height="72" rx="18" fill="#F7F3EC"/><text x="176" y="704" class="body">Infra / Common</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="730" y="280" width="760" height="470" rx="30" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="764" y="334" class="section">Zmagine / ZFlow 对应</text>
+    <rect x="764" y="372" width="692" height="72" rx="18" fill="#ECF4FA"/><text x="796" y="416" class="body">Zmagine Handler / Service：承接入口、参数与路由</text>
+    <rect x="764" y="468" width="692" height="72" rx="18" fill="#F8F1E7"/><text x="796" y="512" class="body">ZFlow DAG / Node：承接业务编排、依赖、回退和执行顺序</text>
+    <rect x="764" y="564" width="692" height="72" rx="18" fill="#F7F3EC"/><text x="796" y="608" class="body">Operator：承接局部领域动作，内部再调用 Repo / Gateway / RPC</text>
+    <rect x="764" y="660" width="692" height="72" rx="18" fill="#E8F4F0"/><text x="796" y="704" class="body">Binding / State / Policy / Observability：承接运行治理</text>
+  </g>
+
+  <path d="M630 408H720" stroke="#BDB5A8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M630 504H720" stroke="#BDB5A8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M630 600H720" stroke="#BDB5A8" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M630 696H720" stroke="#BDB5A8" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="180" y="790" width="1240" height="50" rx="22" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="220" y="823" class="small">效果：BIZ 层减压，输入输出边界更清楚，超时 / 重试 / Trace / Gate 不再散落在业务代码里。</text>
+  </g>
+</svg>

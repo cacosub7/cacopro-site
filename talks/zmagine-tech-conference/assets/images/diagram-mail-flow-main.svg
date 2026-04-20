@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#EEF7F6"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#0f1720" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M0 0L12 6L0 12Z" fill="#2F80ED"/>
+    </marker>
+    <style>
+      .title{font:700 34px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#0F1720}
+      .subtitle{font:500 18px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#475569}
+      .h{font:700 22px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#0F1720}
+      .b{font:500 16px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#334155}
+      .s{font:500 14px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#64748B}
+      .tag{font:700 16px 'PingFang SC','Microsoft YaHei',sans-serif;fill:#0F1720}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <text x="72" y="76" class="title">企业邮件智能回复完整链路</text>
+  <text x="72" y="110" class="subtitle">mail_id 进入系统后，主链路、条件分支和失败沉淀都会被显式建模</text>
+
+  <rect x="76" y="180" width="190" height="86" rx="22" fill="#FFFFFF" stroke="#1FC7B7" filter="url(#shadow)"/>
+  <text x="104" y="214" class="tag">输入</text>
+  <text x="104" y="246" class="b">mail_id</text>
+
+  <g filter="url(#shadow)">
+    <rect x="74" y="328" width="206" height="132" rx="24" fill="#FFFFFF" stroke="#1FC7B7"/>
+    <circle cx="114" cy="370" r="22" fill="#1FC7B7"/><text x="106" y="378" class="tag">1</text>
+    <text x="148" y="368" class="h">load_mail</text>
+    <text x="148" y="396" class="b">读取正文</text>
+    <text x="104" y="432" class="s">mail.body / sender / attachments</text>
+
+    <rect x="326" y="328" width="206" height="132" rx="24" fill="#FFFFFF" stroke="#2F80ED"/>
+    <circle cx="366" cy="370" r="22" fill="#2F80ED"/><text x="358" y="378" class="tag">2</text>
+    <text x="400" y="368" class="h">inspect_attachments</text>
+    <text x="400" y="396" class="b">检查附件</text>
+    <text x="356" y="432" class="s">has_attachments / attachment_manifest</text>
+
+    <rect x="578" y="328" width="206" height="132" rx="24" fill="#FFFFFF" stroke="#2F80ED"/>
+    <circle cx="618" cy="370" r="22" fill="#2F80ED"/><text x="610" y="378" class="tag">3</text>
+    <text x="652" y="368" class="h">download_attachments</text>
+    <text x="652" y="396" class="b">下载附件</text>
+    <text x="608" y="432" class="s">downloaded_files</text>
+
+    <rect x="830" y="328" width="230" height="132" rx="24" fill="#FFFFFF" stroke="#2F80ED"/>
+    <circle cx="870" cy="370" r="22" fill="#2F80ED"/><text x="862" y="378" class="tag">4</text>
+    <text x="904" y="368" class="h">extract_attachment_text</text>
+    <text x="904" y="396" class="b">提取附件文本</text>
+    <text x="860" y="432" class="s">attachment_text / attachment_summary</text>
+
+    <rect x="472" y="540" width="230" height="132" rx="24" fill="#FFFFFF" stroke="#1FC7B7"/>
+    <circle cx="512" cy="582" r="22" fill="#1FC7B7"/><text x="504" y="590" class="tag">5</text>
+    <text x="546" y="580" class="h">draft_reply</text>
+    <text x="546" y="608" class="b">生成回复草稿</text>
+    <text x="502" y="644" class="s">draft_raw / references / risk_flags</text>
+
+    <rect x="774" y="540" width="220" height="132" rx="24" fill="#FFFFFF" stroke="#FFB657"/>
+    <circle cx="814" cy="582" r="22" fill="#FFB657"/><text x="806" y="590" class="tag">6</text>
+    <text x="848" y="580" class="h">format_response</text>
+    <text x="848" y="608" class="b">格式化输出</text>
+    <text x="804" y="644" class="s">draft_title / draft_body / references</text>
+  </g>
+
+  <rect x="1098" y="332" width="430" height="150" rx="24" fill="#FFFFFF" stroke="#D5E0E8" filter="url(#shadow)"/>
+  <text x="1132" y="374" class="h">条件分支 A：无附件</text>
+  <text x="1132" y="406" class="b">has_attachments = false 时，跳过 download_attachments /</text>
+  <text x="1132" y="434" class="b">extract_attachment_text，直接进入 draft_reply。</text>
+
+  <rect x="1098" y="510" width="430" height="178" rx="24" fill="#FFFFFF" stroke="#D5E0E8" filter="url(#shadow)"/>
+  <text x="1132" y="552" class="h">条件分支 B：附件处理失败</text>
+  <text x="1132" y="584" class="b">下载失败、格式不支持、OCR 失败时，失败信息进入 risk_flags，</text>
+  <text x="1132" y="612" class="b">链路仍然可以产出低置信度草稿或转人工接管。</text>
+  <text x="1132" y="650" class="s">链路允许失败沉淀，但不允许黑盒跳步。</text>
+
+  <path d="M266 224H326" fill="none" stroke="#2F80ED" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M280 394H326" fill="none" stroke="#2F80ED" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M532 394H578" fill="none" stroke="#2F80ED" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M784 394H830" fill="none" stroke="#2F80ED" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M1060 394H1098" fill="none" stroke="#2F80ED" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M429 460C429 500 520 520 560 540" fill="none" stroke="#2F80ED" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M945 460C945 500 690 520 650 540" fill="none" stroke="#2F80ED" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M702 606H774" fill="none" stroke="#2F80ED" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M429 460C429 500 1260 474 1260 510" fill="none" stroke="#2F80ED" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+  <path d="M532 394C532 474 1214 474 1214 332" fill="none" stroke="#2F80ED" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+</svg>

@@ -54,6 +54,10 @@
     .content {
       padding: 0 28px 28px;
     }
+    .cards {
+      display: grid;
+      gap: 18px;
+    }
     .eyebrow {
       margin-top: 6px;
       color: var(--accent);
@@ -133,18 +137,31 @@
     <div class="content">
       <div class="eyebrow">Talk Archive</div>
       <h1>分享与公开实验</h1>
-      <p class="intro">这里会逐步收敛我的公开分享、实践复盘和专题表达。先从这次 OpenClaw 分享开始，后面再继续扩展成完整目录。</p>
-      <a class="card" href="/talks/openclaw-first-experiment/">
-        <img src="/talks/openclaw-first-experiment/assets/graphics/intro-cover.jpg" alt="OpenClaw 分享封面" />
-        <div class="meta">
-          <div>
-            <div class="eyebrow">March 2026</div>
-            <h2>AI不只是写代码</h2>
-            <p>OpenClaw 在创作工作流里的第一次公开实验。围绕买票、旅行规划、浏览器自动化、视频剪辑、公众号创作与 OpenClaw 工程化实践展开。</p>
+      <p class="intro">这里收敛我的公开分享、实践复盘和专题表达。现在已经把 OpenClaw 实验分享和 Zmagine 技术大会分享都接进来了，后续继续按这个结构扩展。</p>
+      <div class="cards">
+        <a class="card" href="/talks/zmagine-tech-conference/">
+          <img src="/talks/zmagine-tech-conference/assets/images/intro-tech-poster.jpeg" alt="Zmagine 技术大会分享封面" />
+          <div class="meta">
+            <div>
+              <div class="eyebrow">April 2026</div>
+              <h2>Zmagine 技术大会分享</h2>
+              <p>围绕 Zmagine 的 AI 编译系统、flow / step 编排、unit 运行时、测试治理和企业级工程化闭环展开的一次公开分享。</p>
+            </div>
+            <span class="link">进入分享页</span>
           </div>
-          <span class="link">进入分享页</span>
-        </div>
-      </a>
+        </a>
+        <a class="card" href="/talks/openclaw-first-experiment/">
+          <img src="/talks/openclaw-first-experiment/assets/graphics/intro-cover.jpg" alt="OpenClaw 分享封面" />
+          <div class="meta">
+            <div>
+              <div class="eyebrow">March 2026</div>
+              <h2>AI不只是写代码</h2>
+              <p>OpenClaw 在创作工作流里的第一次公开实验。围绕买票、旅行规划、浏览器自动化、视频剪辑、公众号创作与 OpenClaw 工程化实践展开。</p>
+            </div>
+            <span class="link">进入分享页</span>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </body>

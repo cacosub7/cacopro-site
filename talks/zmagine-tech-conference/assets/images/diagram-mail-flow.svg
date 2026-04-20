@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" rx="40" fill="#FBFAF7"/>
+  <text x="110" y="150" fill="#242424" font-size="46" font-weight="700" font-family="Arial, PingFang SC, sans-serif">企业邮件智能回复主线</text>
+  <text x="110" y="192" fill="#8B857A" font-size="20" font-family="Arial, PingFang SC, sans-serif">把一个现实业务需求，编译成结构化研发与上线动作</text>
+  <g>
+    <rect x="110" y="290" width="180" height="120" rx="24" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <rect x="330" y="290" width="180" height="120" rx="24" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <rect x="550" y="290" width="180" height="120" rx="24" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <rect x="770" y="290" width="180" height="120" rx="24" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <rect x="990" y="290" width="180" height="120" rx="24" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <rect x="1210" y="290" width="180" height="120" rx="24" fill="#FFFFFF" stroke="#E5E1D8"/>
+
+    <text x="146" y="335" fill="#2CA389" font-size="22" font-weight="700" font-family="Arial, PingFang SC, sans-serif">1 需求录入</text>
+    <text x="146" y="373" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">邮件回复目标</text>
+
+    <text x="367" y="335" fill="#2F8DC5" font-size="22" font-weight="700" font-family="Arial, PingFang SC, sans-serif">2 规格编译</text>
+    <text x="367" y="373" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">节点 / 契约 / 测试</text>
+
+    <text x="592" y="335" fill="#CC8D37" font-size="22" font-weight="700" font-family="Arial, PingFang SC, sans-serif">3 蓝图生成</text>
+    <text x="592" y="373" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">DAG / .zflow</text>
+
+    <text x="805" y="335" fill="#2CA389" font-size="22" font-weight="700" font-family="Arial, PingFang SC, sans-serif">4 Agent 执行</text>
+    <text x="805" y="373" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">实现 / 质检 / 部署</text>
+
+    <text x="1030" y="335" fill="#2F8DC5" font-size="22" font-weight="700" font-family="Arial, PingFang SC, sans-serif">5 验证与 TDD</text>
+    <text x="1030" y="373" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">回放 / gate / trace</text>
+
+    <text x="1242" y="335" fill="#CC8D37" font-size="22" font-weight="700" font-family="Arial, PingFang SC, sans-serif">6 发布与观测</text>
+    <text x="1242" y="373" fill="#242424" font-size="18" font-family="Arial, PingFang SC, sans-serif">GitOps / rollout</text>
+  </g>
+
+  <g stroke="#C9C3B8" stroke-width="4" stroke-linecap="round">
+    <path d="M290 350H330"/>
+    <path d="M510 350H550"/>
+    <path d="M730 350H770"/>
+    <path d="M950 350H990"/>
+    <path d="M1170 350H1210"/>
+  </g>
+  <g fill="#C9C3B8">
+    <circle cx="290" cy="350" r="4"/><circle cx="510" cy="350" r="4"/><circle cx="730" cy="350" r="4"/><circle cx="950" cy="350" r="4"/><circle cx="1170" cy="350" r="4"/>
+  </g>
+
+  <g>
+    <rect x="150" y="520" width="1300" height="190" rx="28" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <text x="190" y="575" fill="#242424" font-size="26" font-weight="700" font-family="Arial, PingFang SC, sans-serif">这条链表达的是“结构编译”和“连续生产”</text>
+    <text x="190" y="625" fill="#6A6761" font-size="22" font-family="Arial, PingFang SC, sans-serif">输入 mail_id，只是入口；真正被编译出来的是业务边界、依赖关系、运行策略、验证机制和发布路径。</text>
+    <text x="190" y="667" fill="#6A6761" font-size="22" font-family="Arial, PingFang SC, sans-serif">这也是一条企业研发生产线的原型。</text>
+  </g>
+</svg>

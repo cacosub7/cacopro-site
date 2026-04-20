@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" rx="40" fill="#FBFAF7"/>
+  <text x="120" y="150" fill="#242424" font-size="44" font-weight="700" font-family="Arial, PingFang SC, sans-serif">为什么 Node I/O 更像 Step Contract</text>
+  <text x="120" y="192" fill="#8B857A" font-size="20" font-family="Arial, PingFang SC, sans-serif">它不是 DTO，也不必等于 PO；它是节点与节点之间的局部语义边界</text>
+
+  <g>
+    <rect x="150" y="310" width="280" height="320" rx="26" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <rect x="470" y="260" width="280" height="370" rx="26" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <rect x="790" y="310" width="280" height="320" rx="26" fill="#FFFFFF" stroke="#E5E1D8"/>
+    <rect x="1110" y="220" width="320" height="460" rx="30" fill="#F5FBF8" stroke="#D7EDE5"/>
+
+    <text x="190" y="380" fill="#2F8DC5" font-size="26" font-weight="700" font-family="Arial, PingFang SC, sans-serif">DTO</text>
+    <text x="190" y="430" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">面向接口传输</text>
+    <text x="190" y="465" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">请求 DTO / 响应 DTO</text>
+
+    <text x="510" y="360" fill="#CC8D37" font-size="26" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Domain</text>
+    <text x="510" y="410" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">面向业务语义</text>
+    <text x="510" y="445" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">Mail / Attachment / ReplyDraft</text>
+
+    <text x="830" y="380" fill="#C0544A" font-size="26" font-weight="700" font-family="Arial, PingFang SC, sans-serif">PO</text>
+    <text x="830" y="430" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">面向持久化</text>
+    <text x="830" y="465" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">MailPO / ReplyRecordPO</text>
+
+    <text x="1150" y="330" fill="#2CA389" font-size="30" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Step Contract</text>
+    <text x="1150" y="385" fill="#242424" font-size="22" font-family="Arial, PingFang SC, sans-serif">它回答的是：</text>
+    <text x="1150" y="430" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">这个节点吃什么？</text>
+    <text x="1150" y="468" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">这个节点吐什么？</text>
+    <text x="1150" y="506" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">下一个节点怎么接？</text>
+    <text x="1150" y="544" fill="#6A6761" font-size="20" font-family="Arial, PingFang SC, sans-serif">失败与回退如何显式化？</text>
+    <text x="1150" y="602" fill="#242424" font-size="20" font-weight="700" font-family="Arial, PingFang SC, sans-serif">所以它天然适合压缩 AI 的上下文范围</text>
+  </g>
+</svg>

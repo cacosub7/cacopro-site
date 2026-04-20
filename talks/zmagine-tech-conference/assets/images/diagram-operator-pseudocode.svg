@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F7F4"/>
+      <stop offset="1" stop-color="#F2EEE8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#111111" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      .title{font:700 42px Arial,'PingFang SC',sans-serif;fill:#242424}
+      .sub{font:20px Arial,'PingFang SC',sans-serif;fill:#857F75}
+      .section{font:700 22px Arial,'PingFang SC',sans-serif;fill:#242424}
+      .body{font:18px Arial,'PingFang SC',sans-serif;fill:#5F5A52}
+      .code{font:24px 'SFMono-Regular',Consolas,monospace}
+      .small{font:16px Arial,'PingFang SC',sans-serif;fill:#7A756D}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <text x="100" y="118" font-family="Arial,'PingFang SC',sans-serif" font-size="18" font-weight="700" fill="#2CA389">抽象代码样例</text>
+  <text x="100" y="170" class="title">一切皆任务：智能算子只保留最小处理接口。</text>
+  <text x="100" y="205" class="sub">DAG 负责计算路径，Operator 只负责处理当前节点的一次输入输出。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="100" y="270" width="920" height="280" rx="28" fill="#171717"/>
+    <text x="140" y="350" class="code" fill="#F1D88B">// 智能算子 — 无状态、可复用的处理单元</text>
+    <text x="140" y="408" class="code" fill="#F1D88B">type</text>
+    <text x="220" y="408" class="code" fill="#7EE0A7"> Operator</text>
+    <text x="356" y="408" class="code" fill="#F7F3EA"> interface {</text>
+    <text x="184" y="474" class="code" fill="#7AD7FF">Process</text>
+    <text x="286" y="474" class="code" fill="#F7F3EA">(ctx context.Context, inputs map[string]any) (map[string]any, error)</text>
+    <text x="140" y="530" class="code" fill="#F7F3EA">}</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="100" y="596" width="920" height="182" rx="28" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="140" y="646" class="section">调度与计算路径</text>
+    <text x="140" y="686" class="body">1. 调度器读取 DAG 依赖关系，计算当前 ready 节点。</text>
+    <text x="140" y="722" class="body">2. Binder 准备输入，Registry 查找 Operator，Runner 执行 `Process()`。</text>
+    <text x="140" y="758" class="body">3. ResultStore 保存结果，调度器再决定下一波节点是否就绪。</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1080" y="286" width="380" height="116" rx="22" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="1112" y="326" class="section">无状态</text>
+    <text x="1112" y="364" class="body">每个节点执行一个算子实例，结果写回运行状态。</text>
+
+    <rect x="1080" y="436" width="380" height="116" rx="22" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="1112" y="476" class="section">可复用</text>
+    <text x="1112" y="514" class="body">相同 Operator 可以挂到不同 DAG，不依赖具体业务流程。</text>
+
+    <rect x="1080" y="586" width="380" height="116" rx="22" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="1112" y="626" class="section">可测试</text>
+    <text x="1112" y="664" class="body">Operator 只看 `inputs`，天然适合独立测试与替换。</text>
+  </g>
+</svg>

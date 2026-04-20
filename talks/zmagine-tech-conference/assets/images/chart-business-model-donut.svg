@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
+  <rect width="1200" height="900" rx="36" fill="#FBFAF7"/>
+  <text x="110" y="130" fill="#242424" font-size="40" font-weight="700" font-family="Arial, PingFang SC, sans-serif">开源底座 + 商业平台 + 服务网络</text>
+  <text x="110" y="170" fill="#8B857A" font-size="20" font-family="Arial, PingFang SC, sans-serif">参考 Unity / Unreal：引擎、工作台、资产、服务各有承接层</text>
+
+  <circle cx="420" cy="470" r="190" stroke="#E5E1D8" stroke-width="90"/>
+  <path d="M420 280 A190 190 0 0 1 593 391" stroke="#2CA389" stroke-width="90" fill="none"/>
+  <path d="M593 391 A190 190 0 0 1 477 651" stroke="#2F8DC5" stroke-width="90" fill="none"/>
+  <path d="M477 651 A190 190 0 0 1 247 598" stroke="#CC8D37" stroke-width="90" fill="none"/>
+  <path d="M247 598 A190 190 0 0 1 420 280" stroke="#242424" stroke-width="90" fill="none"/>
+  <circle cx="420" cy="470" r="108" fill="#FBFAF7"/>
+  <text x="352" y="460" fill="#242424" font-size="26" font-weight="700" font-family="Arial, PingFang SC, sans-serif">Zmagine</text>
+  <text x="330" y="495" fill="#8B857A" font-size="18" font-family="Arial, PingFang SC, sans-serif">商业承接结构</text>
+
+  <g font-family="Arial, PingFang SC, sans-serif">
+    <rect x="700" y="260" width="360" height="96" rx="24" fill="#F5FBF8" stroke="#D7EDE5"/>
+    <text x="730" y="310" fill="#2CA389" font-size="24" font-weight="700">开源底座 20%</text>
+    <text x="730" y="340" fill="#6A6761" font-size="18">ZFlow runtime / compiler / 开发者生态</text>
+
+    <rect x="700" y="390" width="360" height="96" rx="24" fill="#F7FAFC" stroke="#D8E9F4"/>
+    <text x="730" y="440" fill="#2F8DC5" font-size="24" font-weight="700">商业平台 35%</text>
+    <text x="730" y="470" fill="#6A6761" font-size="18">Zmagine 工作台 / 权限 / 发布 / 观测</text>
+
+    <rect x="700" y="520" width="360" height="96" rx="24" fill="#FBF6EE" stroke="#E8D9BF"/>
+    <text x="730" y="570" fill="#CC8D37" font-size="24" font-weight="700">企业定制 25%</text>
+    <text x="730" y="600" fill="#6A6761" font-size="18">迁移、接入、治理、行业方案</text>
+
+    <rect x="700" y="650" width="360" height="96" rx="24" fill="#F3F1EC" stroke="#DDD7CC"/>
+    <text x="730" y="700" fill="#242424" font-size="24" font-weight="700">托管与资产市场 20%</text>
+    <text x="730" y="730" fill="#6A6761" font-size="18">算子模板、蓝图复用、托管运行服务</text>
+  </g>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F7F4"/>
+      <stop offset="1" stop-color="#F2EFE8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#111111" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M0 0L12 6L0 12Z" fill="#B6AEA0"/>
+    </marker>
+    <style>
+      .title{font:700 42px Arial,'PingFang SC',sans-serif;fill:#242424}
+      .sub{font:20px Arial,'PingFang SC',sans-serif;fill:#857F75}
+      .section{font:700 22px Arial,'PingFang SC',sans-serif;fill:#242424}
+      .body{font:18px Arial,'PingFang SC',sans-serif;fill:#5F5A52}
+      .code{font:20px 'SFMono-Regular',Consolas,monospace}
+      .small{font:16px Arial,'PingFang SC',sans-serif;fill:#7A756D}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <text x="100" y="118" font-family="Arial,'PingFang SC',sans-serif" font-size="18" font-weight="700" fill="#2CA389">YAML 与注释</text>
+  <text x="100" y="170" class="title">同一张执行图，对应一份完整的 handler / dag / nodes 声明。</text>
+  <text x="100" y="205" class="sub">路由、执行图、依赖关系和格式化顺序全部写在一份配置里。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="100" y="260" width="930" height="620" rx="28" fill="#171717"/>
+    <text x="140" y="316" class="code" fill="#F1D88B">handler</text><text x="232" y="316" class="code" fill="#F7F3EA">:</text>
+    <text x="176" y="356" class="code" fill="#F7F3EA">name</text><text x="250" y="356" class="code" fill="#F7F3EA">:</text><text x="284" y="356" class="code" fill="#7EE0A7"> enterprise_mail_reply</text>
+    <text x="176" y="396" class="code" fill="#F7F3EA">dags</text><text x="250" y="396" class="code" fill="#F7F3EA">:</text>
+    <text x="212" y="436" class="code" fill="#7EE0A7">mail_reply_main</text><text x="412" y="436" class="code" fill="#F7F3EA">:</text>
+    <text x="248" y="476" class="code" fill="#F7F3EA">default</text><text x="356" y="476" class="code" fill="#F7F3EA">:</text><text x="390" y="476" class="code" fill="#7AD7FF"> true</text>
+
+    <text x="520" y="316" class="code" fill="#F1D88B">dag</text><text x="576" y="316" class="code" fill="#F7F3EA">:</text>
+    <text x="556" y="356" class="code" fill="#F7F3EA">name</text><text x="630" y="356" class="code" fill="#F7F3EA">:</text><text x="664" y="356" class="code" fill="#7EE0A7"> mail_reply_main</text>
+    <text x="556" y="396" class="code" fill="#F7F3EA">parallel_execution</text><text x="820" y="396" class="code" fill="#F7F3EA">:</text><text x="854" y="396" class="code" fill="#7AD7FF"> false</text>
+
+    <text x="140" y="548" class="code" fill="#F1D88B">nodes</text><text x="224" y="548" class="code" fill="#F7F3EA">:</text>
+    <text x="140" y="590" class="code" fill="#7EE0A7">  load_mail</text><text x="320" y="590" class="code" fill="#F7F3EA">:</text>
+    <text x="176" y="626" class="code" fill="#F7F3EA">inputs</text><text x="286" y="626" class="code" fill="#F7F3EA">:</text>
+    <text x="212" y="662" class="code" fill="#F7F3EA">mail_id</text><text x="320" y="662" class="code" fill="#F7F3EA">:</text><text x="352" y="662" class="code" fill="#F7F3EA">{ from:</text><text x="486" y="662" class="code" fill="#7AD7FF"> req::mail_id</text><text x="664" y="662" class="code" fill="#F7F3EA"> }</text>
+
+    <text x="520" y="590" class="code" fill="#7EE0A7">  inspect_attachments</text><text x="798" y="590" class="code" fill="#F7F3EA">:</text>
+    <text x="556" y="626" class="code" fill="#F7F3EA">dependencies</text><text x="732" y="626" class="code" fill="#F7F3EA">:</text><text x="764" y="626" class="code" fill="#7AD7FF"> [load_mail]</text>
+    <text x="520" y="668" class="code" fill="#7EE0A7">  download_attachments</text><text x="826" y="668" class="code" fill="#F7F3EA">:</text>
+    <text x="556" y="704" class="code" fill="#F7F3EA">dependencies</text><text x="732" y="704" class="code" fill="#F7F3EA">:</text><text x="764" y="704" class="code" fill="#7AD7FF"> [inspect_attachments]</text>
+    <text x="520" y="746" class="code" fill="#7EE0A7">  extract_attachment_text</text><text x="882" y="746" class="code" fill="#F7F3EA">:</text>
+    <text x="556" y="782" class="code" fill="#F7F3EA">dependencies</text><text x="732" y="782" class="code" fill="#F7F3EA">:</text><text x="764" y="782" class="code" fill="#7AD7FF"> [download_attachments]</text>
+
+    <text x="102" y="748" class="code" fill="#7EE0A7">  draft_reply</text><text x="284" y="748" class="code" fill="#F7F3EA">:</text>
+    <text x="138" y="784" class="code" fill="#F7F3EA">dependencies</text><text x="314" y="784" class="code" fill="#F7F3EA">:</text><text x="346" y="784" class="code" fill="#7AD7FF"> [load_mail, extract_attachment_text]</text>
+    <text x="102" y="826" class="code" fill="#7EE0A7">  format_response</text><text x="356" y="826" class="code" fill="#F7F3EA">:</text>
+    <text x="138" y="862" class="code" fill="#F7F3EA">dependencies</text><text x="314" y="862" class="code" fill="#F7F3EA">:</text><text x="346" y="862" class="code" fill="#7AD7FF"> [draft_reply]</text>
+  </g>
+
+  <path d="M460 436H1080" stroke="#C8C1B4" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M886 396H1080" stroke="#C8C1B4" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M620 784H1080" stroke="#C8C1B4" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M560 862H1080" stroke="#C8C1B4" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="1080" y="314" width="380" height="108" rx="22" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="1112" y="352" class="section">① handler 负责入口</text>
+    <text x="1112" y="388" class="body">一个入口可以挂多张 DAG，默认执行图会在入口层确定。</text>
+
+    <rect x="1080" y="462" width="380" height="108" rx="22" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="1112" y="500" class="section">② dag 决定执行方式</text>
+    <text x="1112" y="536" class="body">串行还是并行、先后顺序和 fan-in 都写在结构里。</text>
+
+    <rect x="1080" y="610" width="380" height="138" rx="22" fill="#FFFFFF" stroke="#E6E0D5"/>
+    <text x="1112" y="648" class="section">③ dependencies 决定计算路径</text>
+    <text x="1112" y="684" class="body">`draft_reply` 只有在 `load_mail` 和 `extract_attachment_text`</text>
+    <text x="1112" y="714" class="body">都完成后才会执行，`format_response` 再把结果收束成最终输出。</text>
+  </g>
+</svg>
